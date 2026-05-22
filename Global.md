@@ -270,129 +270,209 @@ que garantiza que los cuatro niveles hablan el mismo idioma.
 ## 7. Qué es c7 y por qué no es un módulo aparte
 
 `c7` es la séptima Cara del Transcender. No es un controlador externo ni una regla
-especial de parada: es **una Cara más**, que decide con la misma maquinaria
-geométrica que cualquier otra (ordenar, destilar, medir desviación equilátera). El
-control de Aurora no está cableado fuera del sistema; **emerge** como la desviación
-de una Cara que resultó estar al final.
+especial de parada cableada por fuera. Pero tampoco decide del mismo modo que `c1`…`c6`.
 
-Esto es importante: no hay un "umbral" en ningún sitio. No existe un número mágico
-que, al cruzarse, detenga el sistema. La decisión de parar, seguir o abandonar es
-**relativa**, y se toma comparando tres rectores entre sí, no contra una constante.
+Las Caras `c1`…`c6` operan sobre magnitudes **conmensurables**: vectores que viven
+en un mismo tipo de espacio y que se pueden destilar juntos en un triángulo y medir
+su desviación equilátera. `c7` recibe algo distinto: **tres rectores que viven en
+espacios distintos y no conmensurables** —dirección, coherencia y coste—. No tiene
+sentido destilarlos en un único triángulo común, porque mezclar "cuánto apunta la
+dirección" con "cuánto cuesta" en un solo espacio borraría justo la información que
+`c7` necesita: *en qué eje* falla el sistema.
+
+Por eso `c7` no decide por una desviación geométrica sintetizada. Decide por **tres
+diferenciales independientes**, uno por dimensión, cada uno medido contra su propio
+ideal:
+
+```text
+Δdir   = diferencial(c4.ds, ideal_dirección = 0-1-2)
+Δcoh   = diferencial(c5.e,  ideal_coherencia = 0-0-0)
+Δcoste = nivel_acumulado(c6.ov)        ← acumulador, no distancia a un punto
+```
+
+La decisión nace de leer el **vector de los tres diferenciales** `(Δdir, Δcoh,
+Δcoste)`, no de colapsarlo en un escalar ni en un triángulo único.
+
+Esto sigue sin introducir control externo ni umbral mágico:
+
+- **No hay control externo**: los tres diferenciales se calculan con la misma
+  aritmética ternaria del resto del sistema (distancia a un patrón ideal), no con
+  una regla especial.
+- **No hay umbral**: la decisión es siempre **relativa** —"¿cuál de mis tres males
+  es el peor ahora mismo?"—, nunca absoluta —"¿he cruzado una línea fija?"—.
+
+La diferencia con la versión anterior de este documento es deliberada y se explica
+en §8.3: medir cada eje contra su ideal **antes** de cualquier síntesis es más fiel
+a que los tres rectores no son la misma cosa, y entrega el diagnóstico (qué eje
+falla) ya separado por construcción, sin tener que extraerlo de una destilación.
 
 ---
 
 ## 8. Las dimensiones de c7
 
-`c7` recibe como coordenadas los tres rectores del sistema, cada uno procedente de
-una Cara distinta:
+### 8.1. Entradas
+
+`c7` recibe los tres rectores del sistema, cada uno procedente de una Cara distinta:
 
 ```text
-c7.coord[0] = c4.ds   ← dirección global (¿apunta a 0-1-2?)
-c7.coord[1] = c5.e    ← coherencia global (¿cierra a 0-0-0?)
-c7.coord[2] = c6.ov   ← coste / OV (¿cuánto ha costado?)
+c7.coord[0] = c4.ds   ← dirección global (ideal: 0-1-2)
+c7.coord[1] = c5.e    ← coherencia global (ideal: 0-0-0)
+c7.coord[2] = c6.ov   ← coste / OV acumulado (sin punto-objetivo: solo crece)
 ```
 
-Y produce, como cualquier Cara, su conocimiento `K(c7) = (c7.ov, c7.ds, c7.e)`:
+### 8.2. Los tres diferenciales
+
+En lugar de sintetizar las tres coordenadas en un único espacio y medir una sola
+desviación, `c7` calcula un diferencial **por dimensión**, cada uno contra su propio
+ideal:
 
 ```text
-c7.ds = síntesis(c4.ds, c5.e, c6.ov)
-        → el espacio formado por los tres rectores juntos.
-        La decisión vive en este espacio, no en ninguno de los rectores por separado.
-
-c7.ov = c6.ov
-        → el coste se hereda y se propaga hacia arriba sin cambiar de significado.
-
-c7.e  = Emergencia(destilar(c4.ds, c5.e, c6.ov), c7.ds)
-        → la desviación del triángulo que forman los tres rectores entre sí.
-        ESTO EMERGE; NO SE ASIGNA.
+Δdir   = DM(c4.ds, 0-1-2)     → distancia de la dirección a su ideal alineado
+Δcoh   = DM(c5.e,  0-0-0)     → distancia de la coherencia a su cierre equilátero
+Δcoste = nivel(c6.ov)         → coste acumulado de la reconstrucción
 ```
 
-### 8.1. Por qué `c7.e` debe emerger y no copiarse
+Donde `DM(V, I) = Σ|Vi − Ii|` (distancia Manhattan), como en el coste transcendente
+del nivel 3.
 
-`c7.e` **no** es una copia de `c5.e`. Si lo fuera, `c7` no mediría nada nuevo: solo
-reempaquetaría lo que `c5` ya dijo, y se perdería el órgano de decisión.
+**Dirección y coherencia son distancias a un destino**: tienen un ideal-objetivo
+fijo (`0-1-2` y `0-0-0`) y el diferencial mide "cuánto falta para llegar".
 
-En toda la especificación de Aurora, `c.e` es **una salida emergente**: la
-desviación que *resulta* de destilar las tres coordenadas y medir su cierre. `c7`
-no es la excepción. `c5.e` ya entra en `c7` como una coordenada; no hace falta
-volver a copiarla a la salida.
+**El coste es un acumulador, no una distancia a un punto**: no existe un "0-0-0 de
+coste" al que aspirar igual que los otros dos. El coste solo crece a medida que el
+sistema reinterpreta la entrada, fuerza conocimiento o insiste. Su ideal es
+implícitamente "el menor posible para esta solución", y se lee como **nivel**, no
+como distancia a un objetivo. Esta asimetría es importante para la tabla de §9:
+dirección y coherencia *deben acercarse a cero*; el coste *debe no haberse
+disparado*.
 
-Lo que `c7.e` mide es:
+### 8.3. Por qué no se sintetiza en c7.ds
+
+La versión anterior de este documento hacía `c7.ds = síntesis(c4.ds, c5.e, c6.ov)`
+y leía la decisión de un `c7.e` emergente de ese espacio común. Eso tenía un
+problema doble:
+
+1. **Mezcla lo no conmensurable.** Destilar dirección, coherencia y coste en un solo
+   triángulo los trata como si fueran la misma magnitud. La información de *qué eje*
+   falla queda enterrada en la mezcla y hay que recuperarla luego por el rol
+   dominante: un rodeo.
+
+2. **Grados de libertad acoplados.** En una Cara, `ds` y `e` están atados por la
+   relación de cierre: dado `ds`, `e` queda fijado, y viceversa. Si `c7.ds` emerge
+   y `c7.e` también emerge, el par `(c7.ds, c7.e)` no queda determinado sin un ancla
+   externa —y `c7.ds` era justamente la decisión que debía emerger determinada—.
+
+Medir tres diferenciales contra tres ideales **independientes** resuelve las dos
+cosas a la vez:
+
+- no mezcla: cada Δ es puro, sabe solo de su dimensión, y el eje que falla está
+  separado por construcción;
+- no hay acoplamiento que resolver: cada Δ se calcula contra una constante
+  (`0-1-2`, `0-0-0`, o el nivel de coste), no contra una incógnita.
+
+La decisión deja de vivir dentro de `c7.ds`. `c7.ds` y `c7.e` siguen existiendo como
+la mecánica interna de cada Cara de origen (`c4`, `c5`, `c6`) que produce esos
+valores; pero **a nivel de `c7` la decisión es la lectura del vector
+`(Δdir, Δcoh, Δcoste)`**, no una nueva emergencia geométrica. `c7` deja de ser "una
+Cara que destila" y pasa a ser **el comparador de los tres rectores contra sus
+ideales**.
+
+### 8.4. La derivada: c7.f
+
+El vector `(Δdir, Δcoh, Δcoste)` dice **dónde** está el sistema respecto al ideal
+(diferencial posicional). Pero `c7` también necesita saber **si se está acercando o
+alejando** entre una cascada y la siguiente (diferencial evolutivo). Eso es
+exactamente lo que `F` mide en todo el sistema:
 
 ```text
-c7.e = ¿forman dirección, coherencia y coste un triángulo cerrado?
-
-c7.e = 0-0-0  → los tres rectores están de acuerdo a la vez:
-                la dirección es buena, la coherencia cierra y el coste es asumible.
-c7.e ≠ 0-0-0  → algo rompe el triángulo, y la componente más desviada
-                dice exactamente QUÉ rector falla.
+c7.e (posicional) → ¿cuán lejos del ideal estoy, y por qué eje?
+c7.f (evolutivo)  → ¿la última cascada me acercó o me alejó del ideal?
 ```
 
-Esta es la clave de por qué no hace falta umbral: **el mismo valor de `OV`
-significa cosas opuestas según dónde estén los otros dos rectores**. Un `OV` alto
-es tolerable si dirección y coherencia cierran; un `OV` bajo no salva nada si la
-dirección está rota. `c7` nunca pregunta "¿es OV demasiado alto en absoluto?";
-pregunta "¿es OV el peor de mis tres males ahora mismo?".
+`c7.f` se calcula comparando el vector de diferenciales de la cascada anterior con el
+de la actual, con el orden de calidad geométrico del nivel 3
+(`E = 2 < E = 1 < E = 0`):
+
+```text
+c7.f = 1 (corrector)      → la cascada acercó al ideal
+c7.f = 0 (neutro)         → no cambió
+c7.f = 2 (contraproducente)→ la cascada alejó del ideal
+```
+
+`c7.f` es lo que distingue *"esto es difícil pero progresa"* de *"esto es difícil y
+va a peor"*. Sin `f`, `c7` no puede detectar que está atrapado en un mínimo local u
+oscilando; con `f`, sí —y eso domestica el no determinismo destructivo: una cascada
+que no mejora repetidamente (`c7.f = 2` o `0` sostenido) dispara el abandono aunque
+el diferencial posicional aún sugiera margen.
 
 ---
 
 ## 9. Las decisiones de c7
 
-Cuando la cascada se detiene (todos los nodos y aristas alcanzan `E`), `c7` emite
-**dos decisiones acopladas**, ambas leídas del mismo `c7.e` emergente.
+Cuando la cascada se detiene (todos los nodos y aristas alcanzan `E`), `c7` lee el
+vector `(Δdir, Δcoh, Δcoste)` y su evolución `c7.f`, y emite **tres decisiones
+acopladas**.
 
 ### 9.1. Decisión A — calidad: ¿qué hacer con la ventana?
 
-Se lee de la **magnitud** de `c7.e`:
+Se lee de la **magnitud conjunta** de los tres diferenciales, modulada por `c7.f`:
 
 ```text
-c7.e = 0-0-0           → A = 1  CONSOLIDAR
-                         la solución es buena; emerge o crea un carry.
+los tres Δ ≈ 0                         → A = 1  CONSOLIDAR
+                                          todo cerró barato; emerge o crea carry.
 
-c7.e parcial (tiene 1) → A = 0  SEGUIR OPERANDO
-                         no cierra, pero hay dirección; merece seguir.
+algún Δ medio, ninguno roto, c7.f mejora → A = 0  SEGUIR OPERANDO
+                                          no cierra, pero hay dirección y progresa.
 
-c7.e fuerte (tiene 2)  → A = 2  ABANDONAR VENTANA
-                         no converge ni merece la pena seguir intentando.
+Δcoste disparado  ·  o  ·  c7.f empeora → A = 2  ABANDONAR VENTANA
+sostenidamente                            sale demasiado caro insistir, o no progresa.
 ```
 
-Esto reutiliza exactamente la lectura de `E` global del resto del sistema
-(`0-0-0` cierra / contiene-1 ajusta / contiene-2 salto). No es una regla nueva.
+Nótese que el coste interviene en A de dos formas: como **freno duro** (si `Δcoste`
+se dispara, abandonar pase lo que pase en los otros ejes) y, a través de `c7.f`,
+como **detector de obstinación** (si seguir no acerca al ideal, abandonar aunque el
+coste aún sea tolerable). Esto sustituye al umbral: el coste no se compara contra una
+constante, se compara contra *si vale la pena dado dónde están los otros dos ejes y
+si el sistema progresa*.
 
 ### 9.2. Decisión B2 — rector: ¿qué se retoca?
 
-Se lee de **cuál componente** de `c7.e` se desvía más. Tras la ordenación de la
-Cara, el rol dominante (ES/FN/FO) nombra al rector responsable. Principio de
-diseño: **no se toca el síntoma, se toca la raíz** — el rector diagnosticado en
-`c7.coord[i]` se corrige en su Cara de origen:
+Se lee de **cuál de los tres diferenciales es el mayor**. Como cada Δ se midió en su
+propia dimensión, el eje que falla ya está separado: no hay que destilarlo. Principio
+de diseño: **no se toca el síntoma, se toca la raíz** —el rector diagnosticado se
+corrige en su Cara de origen, no en la entrada de `c7`—:
 
 ```text
-si domina la desviación en dirección  → retocar c4.ds
-si domina la desviación en coherencia  → retocar c5.e
-si domina la desviación en coste       → retocar c1.ov
+Δdir   es el mayor  → retocar c4.ds   (la dirección se mide y se corrige en c4)
+Δcoh   es el mayor  → retocar c5.e    (la coherencia se mide y se corrige en c5)
+Δcoste es el mayor  → retocar c1.ov   (el coste se manifiesta en c6.ov pero
+                                       NACE en cómo se reconstruyó desde el
+                                       principio: la raíz es c1.ov, no c6.ov)
 ```
 
-El coste se *manifiesta* en `c6.ov`, pero *nace* en cómo se reconstruyó desde el
-principio; por eso se corrige en `c1.ov` (la raíz), no en `c6.ov` (el síntoma).
+El coste se *manifiesta* en `c6.ov` pero *nace* en `c1.ov` (la reconstrucción
+inicial); por eso, cuando el coste es el problema, se ataca la raíz `c1.ov`, no el
+síntoma `c6.ov`.
 
 ### 9.3. Decisión B1 — modo: ¿aprender, inferir o reparar?
 
-Es fijar el `C` de la siguiente cascada, y **lo dicta el mismo rector que falló**
+Es fijar el `C` de la siguiente cascada, y **lo dicta el mismo diferencial que ganó**
 (B2). B1 y B2 son la misma decisión leída dos veces:
 
 ```text
-falla la coherencia (c5.e)  → C = 0  APRENDIZAJE
-                              falta saber; busca conocimiento que cierre.
+Δcoh es el mayor (falla coherencia)  → C = 0  APRENDIZAJE
+                                       falta saber; busca conocimiento que cierre.
 
-aprieta solo el coste       → C = 1  INFERENCIA
-                              dirección y coherencia cierran; reconstruye con lo que hay.
+Δcoste es el mayor (solo aprieta      → C = 1  INFERENCIA
+el coste, dir y coh cierran)           dirección y coherencia cierran;
+                                       reconstruye con lo que ya hay, sin gastar más.
 
-falla la dirección (c4.ds)  → C = 2  REPARACIÓN DE ENTRADA
-                              la entrada no apunta bien; reinterprétala.
+Δdir es el mayor (falla dirección)   → C = 2  REPARACIÓN DE ENTRADA
+                                       la entrada no apunta bien; reinterprétala.
 ```
 
-El rol más desviado de `c7.e` nombra **a la vez** el rector a tocar (B2) y el modo
-con que se toca (B1). Diagnóstico y tratamiento salen del mismo vector.
+El diferencial dominante nombra **a la vez** el rector a tocar (B2) y el modo con que
+se toca (B1). Diagnóstico y tratamiento salen del mismo vector.
 
 ---
 
@@ -404,22 +484,28 @@ con que se toca (B1). Diagnóstico y tratamiento salen del mismo vector.
    adquieren posición (geometría, nivel 3).
 3. c7 recibe los tres rectores:
        c7.coord = (c4.ds, c5.e, c6.ov)
-4. c7 ordena y destila esas coordenadas como cualquier Cara.
-5. c7.e emerge como desviación del triángulo equilátero de los tres rectores.
-6. c7 emite dos decisiones acopladas:
-       A  (magnitud de c7.e)        → consolidar / seguir / abandonar
-       B1 (rol dominante de c7.e)   → C = aprendizaje / inferencia / reparación
-       B2 (rol dominante de c7.e)   → corregir c4.ds / c5.e / c1.ov en su origen
-7. Si A = consolidar y c7.e = 0-0-0, el sistema da la solución por buena.
-   Si A = seguir, rearranca la cascada en el modo y rector diagnosticados.
+4. c7 NO los destila en un espacio común. Calcula tres diferenciales,
+   cada uno contra su propio ideal:
+       Δdir   = DM(c4.ds, 0-1-2)
+       Δcoh   = DM(c5.e,  0-0-0)
+       Δcoste = nivel(c6.ov)
+5. c7 calcula c7.f comparando el vector de diferenciales con el de la
+   cascada anterior (¿acerca o aleja del ideal?).
+6. c7 emite tres decisiones acopladas:
+       A  (magnitud conjunta + c7.f)  → consolidar / seguir / abandonar
+       B2 (cuál Δ es el mayor)        → corregir c4.ds / c5.e / c1.ov en su origen
+       B1 (el mismo Δ mayor)          → C = aprendizaje / inferencia / reparación
+7. Si A = consolidar y los tres Δ ≈ 0, el sistema da la solución por buena.
+   Si A = seguir, rearranca la cascada en el modo (B1) y rector (B2) diagnosticados.
    Si A = abandonar, descarta la ventana y busca otra solución.
 ```
 
 ```text
-            c4.ds ─┐
-            c5.e  ─┼──► c7 ──► c7.e (emergente) ──► A: consolidar/seguir/abandonar
-            c6.ov ─┘                            └─► B1: C = 0/1/2
-                                                └─► B2: corregir rector de origen
+   c4.ds ──► Δdir   = DM(c4.ds, 0-1-2) ─┐
+   c5.e  ──► Δcoh   = DM(c5.e,  0-0-0) ─┼─► (Δdir, Δcoh, Δcoste) ──► A: consolidar/seguir/abandonar
+   c6.ov ──► Δcoste = nivel(c6.ov)     ─┘            │  ▲              └─► B1: C = 0/1/2 (según Δ mayor)
+                                                     │  │ c7.f         └─► B2: corregir c4.ds/c5.e/c1.ov
+                                              (cascada anterior)
 ```
 
 ---
@@ -431,17 +517,27 @@ soluciones correctas pero laboriosas); demasiado alto y es obsesivo (persigue
 quimeras reescribiendo la entrada entera). Sería el único hiperparámetro verdadero
 del sistema, y definiría su carácter por fuera.
 
-La decisión tri-axial de `c7` **se autocalibra por construcción**, porque:
+La decisión de `c7` **se autocalibra por construcción**, por tres razones:
 
-- los tres rectores están en la misma escala ternaria y se comparan entre sí;
-- la decisión es siempre **relativa** ("¿cuál de mis tres males es el peor?"),
-  nunca absoluta ("¿he cruzado la línea?");
-- el no determinismo del camino queda domado por un criterio único y principista:
-  atacar siempre el eje más desviado.
+- **Es relativa, no absoluta.** Los tres diferenciales se comparan entre sí
+  ("¿cuál de mis tres males es el peor?"), nunca contra una constante fija
+  ("¿he cruzado la línea?"). El mismo `Δcoste` significa cosas opuestas según dónde
+  estén `Δdir` y `Δcoh`: un coste alto es tolerable si dirección y coherencia
+  cierran; un coste bajo no salva nada si la dirección está rota.
+
+- **El eje del fallo está separado por construcción.** Como cada Δ se mide en su
+  propia dimensión contra su propio ideal, el diagnóstico no hay que extraerlo de una
+  síntesis: ya viene desagregado. El rector que falla *es* el Δ mayor.
+
+- **La derivada doma el no determinismo.** `c7.f` detecta cuándo seguir deja de
+  acercar al ideal, así que el sistema no se obsesiona en mínimos locales aunque el
+  coste todavía no se haya disparado. El no determinismo del camino queda contenido
+  por un criterio único y principista: atacar siempre el eje más desviado, y
+  abandonar cuando insistir no progresa.
 
 Aurora es no determinista en el recorrido pero coherente en la regla. "Según cómo
 lo pienses primero llegas a sitios distintos, pero siempre corriges lo que más
-cojea."
+cojea —y dejas de insistir cuando ya no mejoras."
 
 ---
 
@@ -454,15 +550,28 @@ Transcender es un espacio geométrico donde los dominios cerrados se leen como v
             y se mide su desviación respecto al triángulo equilátero.
 Cluster     es una red neuronal donde muchas ventanas compiten y la coherencia emerge.
 
-c7 es la Cara terminal que cierra el bucle:
-   - recibe dirección (c4.ds), coherencia (c5.e) y coste (c6.ov);
-   - su espacio c7.ds es la combinación de los tres;
-   - su desviación c7.e EMERGE y diagnostica qué rector falla;
-   - decide a la vez si consolidar/seguir/abandonar (A),
-     en qué modo reabrir (B1: aprender/inferir/reparar),
-     y qué rector corregir en su origen (B2).
+c7 es la Cara terminal que cierra el bucle, pero decide de forma especial:
+   - recibe tres rectores NO conmensurables:
+       dirección (c4.ds), coherencia (c5.e) y coste (c6.ov);
+   - NO los destila en un espacio común; mide TRES diferenciales,
+     cada uno contra su propio ideal:
+       Δdir   = distancia de la dirección a 0-1-2
+       Δcoh   = distancia de la coherencia a 0-0-0
+       Δcoste = nivel de coste acumulado (no distancia a un punto)
+   - lee también c7.f: si la cascada acercó o alejó del ideal;
+   - decide a la vez:
+       A  (magnitud conjunta + c7.f)  → consolidar / seguir / abandonar
+       B1 (el Δ mayor)                → C = aprender / inferir / reparar
+       B2 (el mismo Δ mayor)          → corregir el rector en su origen
+                                        (c4.ds / c5.e / c1.ov)
+
+La decisión NO nace de un c7.ds sintetizado.
+Nace del diferencial en cada una de las dimensiones, medido contra su ideal.
+Dirección y coherencia son distancias a un destino; el coste es un acumulador.
 
 No hay control externo. No hay umbral.
-El control es geometría: la forma del triángulo que forman los tres rectores.
-La respuesta emerge cuando dirección, coherencia y coste cierran a la vez.
+El control es la comparación relativa de tres diferenciales contra sus ideales,
+templada por la derivada que dice si el sistema sigue mejorando.
+La respuesta emerge cuando dirección, coherencia y coste cierran a la vez,
+sin que insistir cueste más de lo que vale.
 ```
