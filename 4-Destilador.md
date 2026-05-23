@@ -314,3 +314,4 @@ Destilador = integración circular de tres grupos de coordenadas mediante pares 
 
 Desde una perspectiva geometrica podriamos entender las coordenada de entrada como vectores puros, y el conjut diemsnion destiladas como una represenacion de un traingulo donde los nodos de la dimension destilada FO representaria sus lados
 los nodos de sus dimension destilad FN: sus anguleos y los nodo de su dimension destialda  ES: su ordenacion. 
+

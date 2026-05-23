@@ -823,3 +823,5 @@ Usa C para cambiar la dirección de resolución.
 Usa E para expresar coherencia local.
 Usa F para expresar evolución local.
 Convierte la contradicción en solicitud de redundancia.
+
+

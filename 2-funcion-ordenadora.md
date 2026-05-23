@@ -503,3 +503,4 @@ genera y reduce interpretaciones estructurales posibles.
 Frase final compacta:
 
 C orienta la concreción, E mide su estado y F mide su evolución.
+ecto.

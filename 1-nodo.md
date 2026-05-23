@@ -83,3 +83,6 @@ Hiperaristas:
   se suscriben a los eventos de cambio de dominio
   reaccionan cuando un nodo modifica su dominio
 
+
+
+
