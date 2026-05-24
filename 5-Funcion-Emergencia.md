@@ -384,51 +384,172 @@ La decisión depende de E, no solo de K1.
 
 ---
 
-## 11. Cálculo de desviación E
 
-Para calcular `E.Rol`, la función compara la triada `DD` contra el cierre ideal del espacio `DS.Rol`.
 
-Forma conceptual:
+## 11.bis. Cálculo geométrico de E — desviación equilátera por curvatura
+La sección 11 define E como desviación respecto al cierre, pero deja la
+operación en "distancia ternaria discreta". Esta sección fija la mecánica exacta.
+Toda ella ha sido verificada ejecutando el núcleo (Nodo, Trigate, Ordenadora,
+Destilador, Emergencia con descenso fractal real).
+11.bis.1. Los tres roles destilados como geometría
+Las tres dimensiones destiladas no son simétricas: cada una aporta una parte
+distinta del triángulo, tal como adelanta el Destilador.
+textDD.ES → ordenación: qué vector ocupa qué papel
+DD.FN → ángulos: y a la vez la curvatura del espacio
+DD.FO → lados: la longitud de cada arista
+DD.FN cumple un doble papel: además de aportar los ángulos del triángulo
+obtenido, su valor define la curvatura del espacio en el que ese triángulo
+debe cerrar.
+textDD.FN = 0 → espacio cerrado/esférico    (los ángulos ideales suman menos)
+DD.FN = 1 → espacio plano/euclídeo      (suma intermedia)
+DD.FN = 2 → espacio abierto/hiperbólico (los ángulos ideales suman más)
+11.bis.2. El equilátero de referencia depende de la zona
+No existe un único triángulo equilátero ideal. Cada espacio tiene el suyo:
+el equilátero ideal de una zona es el vector constante de su propio valor de
+curvatura.
+textequilátero_ideal(espacio k) = (k, k, k)
 
-```text
-E.Rol = desviación(DD.Rol, DS.Rol, S.Rol)
-```
+espacio 0 → equilátero ideal = 0-0-0
+espacio 1 → equilátero ideal = 1-1-1
+espacio 2 → equilátero ideal = 2-2-2
+Un triángulo es equilátero cuando sus tres ángulos son iguales; el valor en el
+que son iguales es precisamente el que marca la curvatura de la zona. Por eso
+E = 0-0-0 no significa "ángulos nulos", sino "el triángulo obtenido coincide
+con el equilátero de esta zona, sea cual sea".
+11.bis.3. E como distancia Manhattan al equilátero de la zona
+E es el error del triángulo obtenido respecto al equilátero ideal de su
+espacio, medido componente a componente con distancia Manhattan —la misma
+métrica que usa el coste transcendente (DM(V,I) = Σ|Vi−Ii|). Un sistema,
+una métrica.
+textE = | triángulo_obtenido − equilátero_ideal_de_la_zona |
+con equilátero_ideal = (k,k,k),  k = DD.FN del espacio activo
+E.componente = | obtenido.componente − k |
+El cierre completo se da cuando no hay error en ningún eje:
+textE = 0-0-0 → el triángulo obtenido ES el equilátero de su zona → cierre.
+11.bis.4. El espacio se hereda, no se deriva
+Punto crítico verificado en ejecución: la curvatura k NO la calcula la
+triada a partir de sus propios valores. El espacio c.ds se hereda de la
+Cara superior (coherente con la sección 2 de Cara.md: "c.ds actúa como espacio
+superior de referencia"). La triada no elige su zona; la recibe, y su trabajo
+es cerrar o no dentro de ella.
+Consecuencia operativa importante: el mismo triángulo cierra o cruza según
+el espacio heredado. La triada 2-1-0 es defecto inofensivo si hereda zona 2
+(ideal 2-2-2), pero cruza irreparablemente si hereda zona 0 (ideal 0-0-0).
+No hay propiedad intrínseca de "esta triada cruza": el cruce es una relación
+entre la triada y el espacio que le tocó.
+En la cima de la cascada hay un c.ds que no está determinado. Ahí arranca
+como dominio abierto {0,1,2} (equivalente a 2-2-2, desconocido) y se
+restringe por intersección con todas las aristas que lo tocan, como cualquier
+nodo. La arista de conocimiento lo restringe en modo inferencia. No hay regla
+externa que fije el espacio raíz: emerge de la intersección de restricciones.
+11.bis.5. Dos modos de no cierre: defecto recuperable y cruce irrecuperable
+La magnitud de E (Manhattan) dice cuánto se desvía, pero no basta por sí
+sola para decidir qué hacer. La decisión depende del signo de la desviación
+antes de tomar valor absoluto:
+textdesviación_con_signo = triángulo_obtenido − equilátero_ideal
+Defecto (recuperable). El triángulo se queda corto: los ángulos no llegan
+a lo que el espacio exige. No cierra, pero no es imposible —está incompleto.
+Falta dimensión.
+textobtenido < ideal en los ejes desviados
+→ no cierre por defecto → E ≠ 0-0-0 recuperable
+→ emitir Carry(E) y solicitar más dimensión/contexto
+Ejemplo (verificado): espacio 2 (ideal 2-2-2), ángulos 0,1,1.
+textE = |0-2|,|1-2|,|1-2| = 2-1-1   signo: −2,−1,−1 (defecto) → Carry(2-1-1)
+Exceso fuerte / cruce (irrecuperable). El triángulo se pasa del techo de
+la curvatura: los lados se autointersecan, la figura no puede existir en esa
+zona. No es incompletitud, es contradicción geométrica.
+textobtenido excede el techo del espacio con claridad
+→ cruce → relación imposible en esta curvatura
+→ NO se emite carry; abandono. No es salvable con más contexto.
+Ejemplo (verificado): herencia de zona 0 (ideal 0-0-0) sobre 2,1,0. El 2
+da desviación +2 → exceso fuerte → cruce → la cima decide ABANDONAR, sin carry.
+11.bis.6. La frontera defecto/cruce es ambigua por diseño, y se resuelve descendiendo
+Entre el defecto claro y el cruce claro hay una franja ambigua, y esto es
+deliberado, no un hueco de la especificación. Un exceso fuerte (p.ej. 2-2-1
+en zona 0) cruza sin duda. Un exceso leve (p.ej. 1-1-2 en zona 1, ideal
+1-1-1) no es decidible localmente: podría ser un triángulo válido
+ligeramente abierto, o el principio de un cruce.
+La resolución no es un umbral numérico. La ambigüedad se empuja hacia
+abajo: el eje ambiguo desciende a su subfractal —la Semilla Operativa
+inferior cuya DS es ese eje (encaje fractal de Pipeline.md:
+SO.superior.N[i] = SO.inferior[i].DS)— y se reevalúa allí, con la curvatura
+del subnivel. Como el subfractal aporta estructura real y distinta (no una
+copia del problema), a suficiente resolución la ambigüedad se rompe.
+texteje ambiguo:
+   si hay subfractal → DESCENDER y reevaluar en la zona del subnivel
+        si el subfractal CRUZA          → el eje superior CRUZA (irrecuperable)
+        si deja de ser ambiguo          → el eje superior es VÁLIDO (cierra)
+        si sigue ambiguo                → descender otro nivel
+11.bis.7. Condiciones de parada del descenso
+El descenso para cuando ocurre lo primero de:
+text(1) deja de ser ambiguo      → la subtriada cierra o cruza claramente.
+                               veredicto heredado por GEOMETRÍA.
+(2) se concreta en lo conocido → la subtriada cierra (E=0-0-0) contra un
+                               tensor ya cristalizado del diccionario.
+                               veredicto heredado por MEMORIA (atajo).
+"Concretarse en lo conocido" no usa umbral de parecido: un tensor conocido
+resuelve el descenso si hace cerrar la subtriada (E = 0-0-0 contra él), no
+si se le parece. La coherencia sigue siendo el único criterio.
+Implicación de eficiencia (verificada): con diccionario rico, el descenso choca
+con conocimiento pronto y para arriba — barato. Con diccionario vacío (bootstrap)
+el descenso llega hasta las hojas (tokens simples sin más fractal) y fuerza el
+cierre. Por eso el bootstrap es caro y el sistema maduro es rápido: el coste de
+resolución cae a medida que el diccionario aprende. El conocimiento consolidado
+ahorra profundidad de descenso.
+Cuando el descenso se agota sin romper la ambigüedad (hoja, sin más fractal), el
+sistema no se bloquea ni abandona: encaja la solución hacia el tensor
+conocido más coherente. El diccionario desempata. Es un sesgo conservador
+—mantiene el statu quo y da estabilidad— pero no por frecuencia: el cierre
+forzado se registra contra el tensor del que dependió, y queda sujeto a la misma
+revalidación que todo lo demás.
+11.bis.8. Conexión con la contradicción del Trigate
+Esta distinción es la versión geométrica de la distinción fundamental del
+Trigate entre apertura y contradicción:
+textTrigate (CSP):       D = {2}  apertura, recuperable, E = 0
+                     D = {}   contradicción formal, E = 2
 
-La implementación mínima puede usar distancia ternaria discreta:
+Emergencia (geom.):  defecto  apertura geométrica, recuperable → Carry
+                     cruce    contradicción geométrica, irrecuperable → abandono
+El cruce es el D = {} de la geometría: no falta información, es que ninguna
+información puede arreglarlo. Por tanto, E puede contener un 2 con semántica
+de contradicción dura cuando proviene de cruce, no de defecto:
+textE.componente = 2 por defecto → desviación fuerte recuperable (Carry)
+E.componente = 2 por cruce   → contradicción geométrica (sin carry)
+Estado formal derivado CE:
+textsi E = 0-0-0                      → CE = 1  (cierre)
+si E ≠ 0-0-0 solo por defecto     → CE = 0  (ambiguo, recuperable, Carry)
+si algún eje cruza (exceso fatal) → CE = 2  (contradicción, abandono)
+11.bis.9. Lados: forma y tamaño
+DD.FO aporta los lados, con doble lectura.
+Forma (cualitativa, independiente del cierre):
+textaaa → equilátero    aab → isósceles    abc → escaleno
+Tamaño (suma de lados): comportamiento análogo a la suma de ángulos. El espacio
+impone un techo también a la longitud total; los lados deben reconectar la
+figura dentro de la zona. Lados que se pasan del techo → cruce; que se quedan
+cortos → defecto recuperable.
+La emergencia es por tanto una doble comprobación: ángulos (DD.FN)
+realizables en la curvatura y lados (DD.FO) que reconecten. Ambas deben
+pasar para E = 0-0-0. Cualquier cruce —en ángulos o en lados— es abandono.
+11.bis.10. Forma compacta
+textk = DD.FN heredado                 (curvatura del espacio, NO derivada de la triada)
+ideal = (k,k,k)                    (equilátero de la zona)
 
-```text
-desviación = distancia(DD_normalizada, patrón_equilátero(DS,S))
-```
+E = |obtenido − ideal|             (Manhattan, por eje)
 
-Normalización de salida:
+signo(obtenido − ideal):
+   negativo (defecto)      → recuperable → Carry(E)
+   exceso fuerte (cruce)   → irrecuperable → abandono
+   exceso leve (ambiguo)   → DESCENDER al subfractal:
+                                rompe por geometría, o por atajo al diccionario,
+                                o encaje conservador si se agota el fractal
 
-```text
-si desviación = 0        → E.Rol = 0
-si desviación es parcial → E.Rol = 1
-si desviación es fuerte  → E.Rol = 2
-```
-
-El patrón equilátero no significa igualdad aritmética de los tres valores.
-
-Significa cierre estructural de los tres vectores dentro del espacio indicado por `DS`.
-
-Por tanto:
-
-```text
-triángulo equilátero = cierre coherente de relación
-onda sinusoidal      = lectura dinámica equivalente del mismo cierre
-```
-
-La terminología geométrica o ondulatoria es secundaria.
-
-La regla esencial es:
-
-```text
-E = 0 indica cierre.
-E ≠ 0 indica que falta dimensión, contexto o salto de nivel.
-```
-
----
+E = 0-0-0 → cierre; consolidar DS y ascender de nivel.
+Frase compacta:
+textDD.FN define la curvatura; el equilátero de la zona es (k,k,k).
+E es la distancia Manhattan a ese equilátero.
+El signo separa defecto (carry) de cruce (abandono).
+La franja ambigua entre ambos no se decide por umbral: se desciende al fractal
+hasta que la estructura inferior la rompe o el diccionario la concreta
 
 ## 12. C = 0 — Modo aprendizaje
 
