@@ -91,6 +91,9 @@ Hiperaristas:
 
 
 
+
+
+
 ---
 
 ## 2-funcion-ordenadora.md
@@ -600,6 +603,7 @@ genera y reduce interpretaciones estructurales posibles.
 Frase final compacta:
 
 C orienta la concreción, E mide su estado y F mide su evolución.
+ecto.
 
 ---
 
@@ -1431,6 +1435,9 @@ Usa E para expresar coherencia local.
 Usa F para expresar evolución local.
 Convierte la contradicción en solicitud de redundancia.
 
+
+
+
 ---
 
 ## 4-Destilador.md
@@ -1752,9 +1759,1005 @@ Destilador = integración circular de tres grupos de coordenadas mediante pares 
 Desde una perspectiva geometrica podriamos entender las coordenada de entrada como vectores puros, y el conjut diemsnion destiladas como una represenacion de un traingulo donde los nodos de la dimension destilada FO representaria sus lados
 los nodos de sus dimension destilad FN: sus anguleos y los nodo de su dimension destialda  ES: su ordenacion. 
 
+
+
 ---
 
-## 5-Cara.md
+## 5-Funcion-Emergencia.md
+
+# Función de Emergencia — Funcion de sintizacion.
+# Función de Emergencia — Especificación técnica refactorizada
+
+## 1. Definición
+
+Una **Función de Emergencia** es una hiperarista de consolidación estructural que recibe una dimensión destilada y determina dos cosas inseparables:
+
+1. **El espacio operativo** donde los vectores pueden ser interpretados.
+2. **La desviación de cierre** respecto al triángulo equilátero ideal de ese espacio.
+
+Forma general:
+
+```text
+FE_Rol(DD.Rol, S.Rol, C) → DS.Rol, E.Rol, F.Rol
+```
+
+donde:
+
+```text
+DD.Rol = dimensión destilada de entrada del rol activo
+Rol    = ES, FN o FO
+S.Rol  = selector de espacio / combinación vectorial
+C      = operador de control
+DS.Rol = sector o dimensión superior emergente del rol activo
+E.Rol  = desviación local respecto al cierre equilátero
+F.Rol  = evolución local de la desviación/coherencia
+```
+
+La función ya no debe entenderse como una función que simplemente elige un `SCE(DKC)`.
+
+La salida principal es la pareja:
+
+```text
+DS.Rol + E.Rol
+```
+
+`DS.Rol` indica **en qué espacio operan los vectores**.
+
+`E.Rol` indica **si esos vectores cierran o no cierran** dentro de ese espacio.
+
+Forma compacta:
+
+```text
+DS define el espacio.
+E mide la desviación respecto al cierre equilátero.
+```
+
+Si la desviación global es:
+
+```text
+E = 0-0-0
+```
+
+entonces los tres vectores han cerrado como triángulo equilátero operativo y la relación puede darse por comprendida en ese nivel.
+
+Si no se alcanza:
+
+```text
+E ≠ 0-0-0
+```
+
+la relación sigue siendo incoherente, incompleta o abierta, y el sistema debe solicitar más dimensión, más contexto o una operación de nivel superior.
+
+---
+
+## 2. Dominio base
+
+La función opera sobre el dominio ternario:
+
+```text
+T = {0,1,2}
+```
+
+Interpretación general:
+
+| Valor | Sentido operativo |
+|---|---|
+| 0 | cierre / desviación nula / coincidencia local |
+| 1 | desviación media / transición / cierre parcial |
+| 2 | apertura superior / desviación máxima / no cierre |
+
+Regla estructural:
+
+```text
+2 ≠ error
+```
+
+El valor `2` representa apertura, no cierre o falta de determinación.
+
+La contradicción formal sigue siendo una propiedad del dominio:
+
+```text
+D = {} → contradicción
+```
+
+Por tanto, la Función de Emergencia distingue tres planos:
+
+| Plano | Qué expresa |
+|---|---|
+| DS | espacio donde operan los vectores |
+| E | desviación respecto al cierre equilátero |
+| estado(D) | coherencia formal del dominio calculado |
+
+---
+
+## 3. Entrada DD
+
+La entrada de la función es una dimensión destilada:
+
+```text
+DD = (X0, X1, X2)
+```
+
+Cada componente representa un vector local procedente del Destilador.
+
+Para `FN` y `FO`, la dimensión puede normalizarse como multiconjunto:
+
+```text
+DDⁿ = ordenar(DD)
+```
+
+Ejemplo:
+
+```text
+DD = (2,0,1)
+DDⁿ = (0,1,2)
+```
+
+Para `ES`, el orden puede tener significado estructural y no debe eliminarse automáticamente:
+
+```text
+FN / FO → DD como multiconjunto
+ES      → DD posiblemente ordenada
+```
+
+---
+
+## 4. Interpretación geométrica-operativa
+
+La Función de Emergencia interpreta cada `DD.Rol` como una triada vectorial.
+
+La triada puede estar:
+
+1. **cerrada**, si forma un triángulo equilátero operativo en el espacio indicado por `DS.Rol`;
+2. **parcialmente desviada**, si todavía conserva dirección estructural pero no cierra;
+3. **abierta o incompleta**, si requiere más dimensión para poder cerrarse.
+
+El cierre ideal se expresa como:
+
+```text
+E.Rol = 0
+```
+
+La Cara completa integra los tres roles:
+
+```text
+E = (E.ES, E.FN, E.FO)
+```
+
+El cierre completo de la Cara se alcanza cuando:
+
+```text
+E = (0,0,0)
+```
+
+Este vector representa el equivalente operativo del triángulo equilátero completo.
+
+---
+
+## 5. Selector S
+
+`S` deja de interpretarse como el resultado importante de la emergencia.
+
+`S` pasa a ser el **selector de combinación vectorial**.
+
+```text
+S ∈ {0,1,2}
+```
+
+| S | Nombre | Criterio |
+|---|---|---|
+| 0 | conservador | intenta cerrar por el extremo inferior |
+| 1 | balanceado | intenta cerrar por equilibrio central |
+| 2 | expansivo | intenta cerrar por apertura superior |
+
+Forma compacta:
+
+```text
+S selecciona cómo se combinan los vectores.
+E mide cuánto se desvían del cierre ideal.
+```
+
+Por tanto, `S` define la forma de probar el espacio, pero la decisión importante la da `E`.
+
+---
+
+## 6. Selector por rol
+
+En una Cara completa, la Función de Emergencia se instancia tres veces:
+
+```text
+FE.ES(DD.ES, S.ES, C)
+FE.FN(DD.FN, S.FN, C)
+FE.FO(DD.FO, S.FO, C)
+```
+
+La forma completa de `S` es:
+
+```text
+S = (S.ES, S.FN, S.FO)
+```
+
+Se permite `S_global` cuando el mismo selector se aplica a los tres roles:
+
+```text
+S_global = s ⇔ S.ES = S.FN = S.FO = s
+```
+
+---
+
+## 7. Dimensión superior DS
+
+La salida espacial de cada función se denomina `DS.Rol`.
+
+`DS.Rol` representa el sector o espacio superior donde la triada destilada puede operar.
+
+Puede conservar internamente la estructura anterior `DKC` como representación técnica:
+
+```text
+DS.Rol = DKC = (K1, K2, K3)
+```
+
+con:
+
+| Componente | Nombre | Función |
+|---|---|---|
+| K1 | sector principal | indica el espacio dominante |
+| K2 | desarrollo | indica concentración, transición o apertura |
+| K3 | orientación | indica orientación inferior, central o superior |
+
+Pero normativamente la lectura pasa a ser:
+
+```text
+DKC no es el objetivo final.
+DKC es la codificación interna de DS.Rol.
+```
+
+---
+
+## 8. Desviación E
+
+`E` mide la desviación respecto al cierre equilátero dentro del espacio `DS`.
+
+```text
+E.Rol ∈ {0,1,2}
+```
+
+| E.Rol | Significado geométrico-operativo |
+|---|---|
+| 0 | cierre local: la triada cierra en ese rol |
+| 1 | desviación parcial: falta ajuste o contexto |
+| 2 | no cierre fuerte: requiere más dimensión o revisión |
+
+La Cara completa usa:
+
+```text
+E = (E.ES, E.FN, E.FO)
+```
+
+Interpretación superior:
+
+| E global | Significado |
+|---|---|
+| 0-0-0 | triángulo cerrado; comprensión local suficiente |
+| contiene 1 | cierre parcial; requiere ajuste o contexto adicional |
+| contiene 2 | no cierre fuerte; requiere redundancia, recombinación o salto superior |
+
+Frase normativa:
+
+```text
+E no es solo estado de dominio; en la Función de Emergencia refactorizada E es desviación de cierre.
+```
+
+Para mantener compatibilidad con el resto del sistema, puede derivarse un estado formal `CE`:
+
+```text
+si E = 0-0-0      → CE = 1
+si algún E = 2    → CE = 2
+en otro caso      → CE = 0
+```
+
+Donde `CE` conserva la semántica clásica:
+
+```text
+CE = 1 → coherente
+CE = 0 → ambiguo
+CE = 2 → contradictorio / no resoluble localmente
+```
+
+---
+
+## 9. Operador de control C
+
+`C` determina qué parte de la relación debe resolverse.
+
+```text
+C ∈ {0,1,2}
+```
+
+| C | Modo | Pregunta | Objetivo |
+|---|---|---|---|
+| 0 | aprendizaje | ¿qué selector S explica este cierre o desviación? | D(S) |
+| 1 | emergencia | ¿qué DS y qué E emergen de esta DD con este S? | DS + E |
+| 2 | reconstrucción | ¿qué DD serían compatibles con este DS y esta desviación? | D(DD) |
+
+Forma compacta:
+
+```text
+C = 0 → DD + DS/E → D(S)
+C = 1 → DD + S    → DS + E
+C = 2 → S + DS/E  → D(DD)
+```
+
+`C` no cambia la relación estructural.
+
+Solo cambia la dirección de resolución.
+
+---
+
+## 10. C = 1 — Modo emergencia
+
+En modo emergencia, la función calcula:
+
+```text
+DDⁿ + S.Rol → DS.Rol, E.Rol
+```
+
+La tabla anterior puede seguir funcionando como tabla de sector `DS`, pero ahora `E` debe calcularse como desviación respecto al patrón de cierre ideal.
+
+Tabla base para `FN` y `FO`:
+
+| DDⁿ | K2 | K3 | S=0 → K1 | S=1 → K1 | S=2 → K1 |
+|---|---:|---:|---|---|---|
+| (0,0,0) | 0 | 0 | 0 | 0 | 0 |
+| (0,0,1) | 0 | 0 | 0 | 0 | 1 |
+| (0,0,2) | 1 | 0 | 0 | {0,1} | 1 |
+| (0,1,1) | 1 | 1 | 0 | {0,1} | 1 |
+| (0,1,2) | 1 | 1 | 0 | 1 | 2 |
+| (0,2,2) | 2 | 2 | 1 | {1,2} | 2 |
+| (1,1,1) | 0 | 1 | 1 | 1 | 1 |
+| (1,1,2) | 1 | 1 | 1 | {1,2} | 2 |
+| (1,2,2) | 1 | 2 | 1 | 2 | 2 |
+| (2,2,2) | 2 | 2 | 2 | 2 | 2 |
+
+Donde:
+
+```text
+DS.Rol = (K1,K2,K3)
+```
+
+Si `K1` es múltiple, el espacio queda abierto, pero no necesariamente contradictorio.
+
+Ejemplo:
+
+```text
+DDⁿ = (0,0,2)
+S = 1
+
+K1 = {0,1}
+K2 = 1
+K3 = 0
+
+DS = ({0,1},1,0)
+```
+
+En la versión anterior esto se interpretaba principalmente como sector abierto.
+
+En la versión refactorizada se interpreta así:
+
+```text
+El espacio DS existe, pero el cierre no está completamente determinado.
+La decisión depende de E, no solo de K1.
+```
+
+---
+
+
+
+## 11.bis. Cálculo geométrico de E — desviación equilátera por curvatura
+La sección 11 define E como desviación respecto al cierre, pero deja la
+operación en "distancia ternaria discreta". Esta sección fija la mecánica exacta.
+Toda ella ha sido verificada ejecutando el núcleo (Nodo, Trigate, Ordenadora,
+Destilador, Emergencia con descenso fractal real).
+11.bis.1. Los tres roles destilados como geometría
+Las tres dimensiones destiladas no son simétricas: cada una aporta una parte
+distinta del triángulo, tal como adelanta el Destilador.
+textDD.ES → ordenación: qué vector ocupa qué papel
+DD.FN → ángulos: y a la vez la curvatura del espacio
+DD.FO → lados: la longitud de cada arista
+DD.FN cumple un doble papel: además de aportar los ángulos del triángulo
+obtenido, su valor define la curvatura del espacio en el que ese triángulo
+debe cerrar.
+textDD.FN = 0 → espacio cerrado/esférico    (los ángulos ideales suman menos)
+DD.FN = 1 → espacio plano/euclídeo      (suma intermedia)
+DD.FN = 2 → espacio abierto/hiperbólico (los ángulos ideales suman más)
+11.bis.2. El equilátero de referencia depende de la zona
+No existe un único triángulo equilátero ideal. Cada espacio tiene el suyo:
+el equilátero ideal de una zona es el vector constante de su propio valor de
+curvatura.
+textequilátero_ideal(espacio k) = (k, k, k)
+
+espacio 0 → equilátero ideal = 0-0-0
+espacio 1 → equilátero ideal = 1-1-1
+espacio 2 → equilátero ideal = 2-2-2
+Un triángulo es equilátero cuando sus tres ángulos son iguales; el valor en el
+que son iguales es precisamente el que marca la curvatura de la zona. Por eso
+E = 0-0-0 no significa "ángulos nulos", sino "el triángulo obtenido coincide
+con el equilátero de esta zona, sea cual sea".
+11.bis.3. E como distancia Manhattan al equilátero de la zona
+E es el error del triángulo obtenido respecto al equilátero ideal de su
+espacio, medido componente a componente con distancia Manhattan —la misma
+métrica que usa el coste transcendente (DM(V,I) = Σ|Vi−Ii|). Un sistema,
+una métrica.
+textE = | triángulo_obtenido − equilátero_ideal_de_la_zona |
+con equilátero_ideal = (k,k,k),  k = DD.FN del espacio activo
+E.componente = | obtenido.componente − k |
+El cierre completo se da cuando no hay error en ningún eje:
+textE = 0-0-0 → el triángulo obtenido ES el equilátero de su zona → cierre.
+11.bis.4. El espacio se hereda, no se deriva
+Punto crítico verificado en ejecución: la curvatura k NO la calcula la
+triada a partir de sus propios valores. El espacio c.ds se hereda de la
+Cara superior (coherente con la sección 2 de Cara.md: "c.ds actúa como espacio
+superior de referencia"). La triada no elige su zona; la recibe, y su trabajo
+es cerrar o no dentro de ella.
+Consecuencia operativa importante: el mismo triángulo cierra o cruza según
+el espacio heredado. La triada 2-1-0 es defecto inofensivo si hereda zona 2
+(ideal 2-2-2), pero cruza irreparablemente si hereda zona 0 (ideal 0-0-0).
+No hay propiedad intrínseca de "esta triada cruza": el cruce es una relación
+entre la triada y el espacio que le tocó.
+En la cima de la cascada hay un c.ds que no está determinado. Ahí arranca
+como dominio abierto {0,1,2} (equivalente a 2-2-2, desconocido) y se
+restringe por intersección con todas las aristas que lo tocan, como cualquier
+nodo. La arista de conocimiento lo restringe en modo inferencia. No hay regla
+externa que fije el espacio raíz: emerge de la intersección de restricciones.
+11.bis.5. Dos modos de no cierre: defecto recuperable y cruce irrecuperable
+La magnitud de E (Manhattan) dice cuánto se desvía, pero no basta por sí
+sola para decidir qué hacer. La decisión depende del signo de la desviación
+antes de tomar valor absoluto:
+textdesviación_con_signo = triángulo_obtenido − equilátero_ideal
+Defecto (recuperable). El triángulo se queda corto: los ángulos no llegan
+a lo que el espacio exige. No cierra, pero no es imposible —está incompleto.
+Falta dimensión.
+textobtenido < ideal en los ejes desviados
+→ no cierre por defecto → E ≠ 0-0-0 recuperable
+→ emitir Carry(E) y solicitar más dimensión/contexto
+Ejemplo (verificado): espacio 2 (ideal 2-2-2), ángulos 0,1,1.
+textE = |0-2|,|1-2|,|1-2| = 2-1-1   signo: −2,−1,−1 (defecto) → Carry(2-1-1)
+Exceso fuerte / cruce (irrecuperable). El triángulo se pasa del techo de
+la curvatura: los lados se autointersecan, la figura no puede existir en esa
+zona. No es incompletitud, es contradicción geométrica.
+textobtenido excede el techo del espacio con claridad
+→ cruce → relación imposible en esta curvatura
+→ NO se emite carry; abandono. No es salvable con más contexto.
+Ejemplo (verificado): herencia de zona 0 (ideal 0-0-0) sobre 2,1,0. El 2
+da desviación +2 → exceso fuerte → cruce → la cima decide ABANDONAR, sin carry.
+11.bis.6. La frontera defecto/cruce es ambigua por diseño, y se resuelve descendiendo
+Entre el defecto claro y el cruce claro hay una franja ambigua, y esto es
+deliberado, no un hueco de la especificación. Un exceso fuerte (p.ej. 2-2-1
+en zona 0) cruza sin duda. Un exceso leve (p.ej. 1-1-2 en zona 1, ideal
+1-1-1) no es decidible localmente: podría ser un triángulo válido
+ligeramente abierto, o el principio de un cruce.
+La resolución no es un umbral numérico. La ambigüedad se empuja hacia
+abajo: el eje ambiguo desciende a su subfractal —la Semilla Operativa
+inferior cuya DS es ese eje (encaje fractal de Pipeline.md:
+SO.superior.N[i] = SO.inferior[i].DS)— y se reevalúa allí, con la curvatura
+del subnivel. Como el subfractal aporta estructura real y distinta (no una
+copia del problema), a suficiente resolución la ambigüedad se rompe.
+texteje ambiguo:
+   si hay subfractal → DESCENDER y reevaluar en la zona del subnivel
+        si el subfractal CRUZA          → el eje superior CRUZA (irrecuperable)
+        si deja de ser ambiguo          → el eje superior es VÁLIDO (cierra)
+        si sigue ambiguo                → descender otro nivel
+11.bis.7. Condiciones de parada del descenso
+El descenso para cuando ocurre lo primero de:
+text(1) deja de ser ambiguo      → la subtriada cierra o cruza claramente.
+                               veredicto heredado por GEOMETRÍA.
+(2) se concreta en lo conocido → la subtriada cierra (E=0-0-0) contra un
+                               tensor ya cristalizado del diccionario.
+                               veredicto heredado por MEMORIA (atajo).
+"Concretarse en lo conocido" no usa umbral de parecido: un tensor conocido
+resuelve el descenso si hace cerrar la subtriada (E = 0-0-0 contra él), no
+si se le parece. La coherencia sigue siendo el único criterio.
+Implicación de eficiencia (verificada): con diccionario rico, el descenso choca
+con conocimiento pronto y para arriba — barato. Con diccionario vacío (bootstrap)
+el descenso llega hasta las hojas (tokens simples sin más fractal) y fuerza el
+cierre. Por eso el bootstrap es caro y el sistema maduro es rápido: el coste de
+resolución cae a medida que el diccionario aprende. El conocimiento consolidado
+ahorra profundidad de descenso.
+Cuando el descenso se agota sin romper la ambigüedad (hoja, sin más fractal), el
+sistema no se bloquea ni abandona: encaja la solución hacia el tensor
+conocido más coherente. El diccionario desempata. Es un sesgo conservador
+—mantiene el statu quo y da estabilidad— pero no por frecuencia: el cierre
+forzado se registra contra el tensor del que dependió, y queda sujeto a la misma
+revalidación que todo lo demás.
+11.bis.8. Conexión con la contradicción del Trigate
+Esta distinción es la versión geométrica de la distinción fundamental del
+Trigate entre apertura y contradicción:
+textTrigate (CSP):       D = {2}  apertura, recuperable, E = 0
+                     D = {}   contradicción formal, E = 2
+
+Emergencia (geom.):  defecto  apertura geométrica, recuperable → Carry
+                     cruce    contradicción geométrica, irrecuperable → abandono
+El cruce es el D = {} de la geometría: no falta información, es que ninguna
+información puede arreglarlo. Por tanto, E puede contener un 2 con semántica
+de contradicción dura cuando proviene de cruce, no de defecto:
+textE.componente = 2 por defecto → desviación fuerte recuperable (Carry)
+E.componente = 2 por cruce   → contradicción geométrica (sin carry)
+Estado formal derivado CE:
+textsi E = 0-0-0                      → CE = 1  (cierre)
+si E ≠ 0-0-0 solo por defecto     → CE = 0  (ambiguo, recuperable, Carry)
+si algún eje cruza (exceso fatal) → CE = 2  (contradicción, abandono)
+11.bis.9. Lados: forma y tamaño
+DD.FO aporta los lados, con doble lectura.
+Forma (cualitativa, independiente del cierre):
+textaaa → equilátero    aab → isósceles    abc → escaleno
+Tamaño (suma de lados): comportamiento análogo a la suma de ángulos. El espacio
+impone un techo también a la longitud total; los lados deben reconectar la
+figura dentro de la zona. Lados que se pasan del techo → cruce; que se quedan
+cortos → defecto recuperable.
+La emergencia es por tanto una doble comprobación: ángulos (DD.FN)
+realizables en la curvatura y lados (DD.FO) que reconecten. Ambas deben
+pasar para E = 0-0-0. Cualquier cruce —en ángulos o en lados— es abandono.
+11.bis.10. Forma compacta
+textk = DD.FN heredado                 (curvatura del espacio, NO derivada de la triada)
+ideal = (k,k,k)                    (equilátero de la zona)
+
+E = |obtenido − ideal|             (Manhattan, por eje)
+
+signo(obtenido − ideal):
+   negativo (defecto)      → recuperable → Carry(E)
+   exceso fuerte (cruce)   → irrecuperable → abandono
+   exceso leve (ambiguo)   → DESCENDER al subfractal:
+                                rompe por geometría, o por atajo al diccionario,
+                                o encaje conservador si se agota el fractal
+
+E = 0-0-0 → cierre; consolidar DS y ascender de nivel.
+Frase compacta:
+textDD.FN define la curvatura; el equilátero de la zona es (k,k,k).
+E es la distancia Manhattan a ese equilátero.
+El signo separa defecto (carry) de cruce (abandono).
+La franja ambigua entre ambos no se decide por umbral: se desciende al fractal
+hasta que la estructura inferior la rompe o el diccionario la concreta
+
+## 12. C = 0 — Modo aprendizaje
+
+En modo aprendizaje, la función intenta inferir qué selector `S` explica una emergencia observada.
+
+```text
+DD + DS/E → D(S)
+```
+
+La tabla inversa de `K1` puede conservarse como base, pero ahora la selección debe validar también la desviación `E`.
+
+Regla:
+
+```text
+Un selector S es compatible si produce un DS compatible y una E compatible.
+```
+
+Forma compacta:
+
+```text
+D(S)' = D(S) ∩ S_compatibles(DD, DS_observado, E_observado)
+```
+
+Estado formal derivado:
+
+```text
+D(S)' = {}      → CE = 2
+|D(S)'| = 1     → CE = 1
+|D(S)'| > 1     → CE = 0
+```
+
+---
+
+## 13. C = 2 — Modo reconstrucción
+
+En modo reconstrucción, la función intenta determinar qué dimensiones destiladas serían compatibles con un selector, un espacio y una desviación observada.
+
+```text
+S + DS/E → D(DD)
+```
+
+Regla:
+
+```text
+Una DD es compatible si, al operar con S, produce un DS compatible y una E compatible.
+```
+
+Forma compacta:
+
+```text
+D(DD)' = D(DD) ∩ DD_compatibles(S, DS_observado, E_observado)
+```
+
+Estado formal derivado:
+
+```text
+D(DD)' = {}      → CE = 2
+|D(DD)'| = 1     → CE = 1
+|D(DD)'| > 1     → CE = 0
+```
+
+---
+
+## 14. Métrica F
+
+`F` mide la evolución local tras una operación.
+
+En esta refactorización, `F` puede leerse como evolución de la desviación:
+
+```text
+F ≈ ΔE / ΔC_operativo
+```
+
+```text
+F ∈ {0,1,2}
+```
+
+| F | Nombre | Significado |
+|---|---|---|
+| 0 | neutro | mantiene la desviación/coherencia |
+| 1 | corrector | reduce la desviación y acerca al cierre |
+| 2 | contraproducente | aumenta la desviación o rompe el cierre |
+
+Orden de calidad para la desviación:
+
+```text
+E = 2 < E = 1 < E = 0
+```
+
+Tabla:
+
+| E anterior | E nuevo | F |
+|---:|---:|---:|
+| 2 | 0 | 1 |
+| 2 | 1 | 1 |
+| 1 | 0 | 1 |
+| 0 | 0 | 0 |
+| 1 | 1 | 0 |
+| 2 | 2 | 0 |
+| 0 | 1 | 2 |
+| 0 | 2 | 2 |
+| 1 | 2 | 2 |
+
+---
+
+## 15. Operación general
+
+La Función de Emergencia no elige arbitrariamente entre cierres posibles.
+
+Reduce dominios, conserva ambigüedad y solicita más estructura cuando no puede cerrar.
+
+Reglas:
+
+```text
+La función no fuerza E = 0.
+La función conserva E ≠ 0 como información operativa.
+La función usa E ≠ 0 para solicitar más dimensión o salto superior.
+```
+
+Si:
+
+```text
+E = 0-0-0
+```
+
+entonces:
+
+```text
+la Cara puede dar por comprendida el área local
+y pasar al análisis de espacios superiores.
+```
+
+Si:
+
+```text
+E ≠ 0-0-0
+```
+
+entonces:
+
+```text
+la Cara no debe cerrar prematuramente.
+debe emitir carry con el vector E
+y solicitar nuevas dimensiones del mismo ciclo o cluster.
+```
+
+---
+
+## 16. Relación con ventana operativa
+
+La ventana operativa trabaja con tres vectores.
+
+Debe intentar que la emergencia produzca:
+
+```text
+E = 0-0-0
+```
+
+Si no lo consigue, el sistema debe generar un `carry`:
+
+```text
+Carry = E
+```
+
+y añadir nuevas dimensiones o vectores del mismo cluster/ciclo para intentar una nueva emergencia.
+
+Forma mínima:
+
+```text
+si E ≠ 0-0-0:
+    emitir Carry(E)
+    ampliar ventana con nuevos vectores del cluster
+    reevaluar emergencia
+```
+
+Si sí lo consigue:
+
+```text
+si E = 0-0-0:
+    consolidar DS
+    DS emerge como dimensión superior del siguiente ciclo
+```
+
+Este comportamiento conecta la Función de Emergencia con el Pipeline asíncrono.
+
+---
+
+## 17. Pseudocódigo compacto
+
+```text
+evaluarEmergencia(DD, Rol, S_Rol, C, DS_observado=None, E_observado=None):
+
+    E_anterior = E.Rol
+
+    si Rol ∈ {FN, FO}:
+        DDn = ordenar(DD)
+
+    si Rol = ES:
+        DDn = normalizarES(DD)
+        # puede conservar orden estructural
+
+    si C = 0:
+        # aprendizaje
+        D_S_compatible = buscarSelectoresCompatibles(
+            DDn,
+            DS_observado,
+            E_observado
+        )
+        D(S)' = D(S) ∩ D_S_compatible
+        CE = estado(D(S)')
+        E_nuevo = E_observado
+
+    si C = 1:
+        # emergencia
+        K1 = tablaSelector(DDn, S_Rol)
+        K2 = tablaDesarrollo(DDn)
+        K3 = tablaOrientacion(DDn)
+
+        DS = (K1,K2,K3)
+        E_nuevo = calcularDesviacionEquilatera(DDn, DS, S_Rol)
+        CE = estadoCierre(E_nuevo)
+
+    si C = 2:
+        # reconstrucción
+        D_DD_compatible = buscarDDCompatibles(
+            S_Rol,
+            DS_observado,
+            E_observado
+        )
+        D(DD)' = D(DD) ∩ D_DD_compatible
+        CE = estado(D(DD)')
+        E_nuevo = E_observado
+
+    F = calcularF(E_anterior, E_nuevo)
+
+    si E_nuevo != 0:
+        emitir Carry(E_nuevo)
+
+    devolver dominios actualizados, DS, E_nuevo, CE, F
+```
+
+Funciones auxiliares:
+
+```text
+estado(D):
+
+    si D = {}:
+        devolver 2
+
+    si |D| = 1:
+        devolver 1
+
+    si |D| > 1:
+        devolver 0
+```
+
+```text
+estadoCierre(E):
+
+    si E = 0:
+        devolver 1
+
+    si E = 1:
+        devolver 0
+
+    si E = 2:
+        devolver 2
+```
+
+```text
+calcularF(E_anterior, E_nuevo):
+
+    calidad(2) = 0
+    calidad(1) = 1
+    calidad(0) = 2
+
+    si calidad(E_nuevo) > calidad(E_anterior):
+        devolver 1
+
+    si calidad(E_nuevo) = calidad(E_anterior):
+        devolver 0
+
+    si calidad(E_nuevo) < calidad(E_anterior):
+        devolver 2
+```
+
+---
+
+## 18. Modelo de eventos
+
+La Función de Emergencia se suscribe a:
+
+```text
+DD.changed
+S.changed
+C.changed
+DS_observado.changed
+E_observado.changed
+Rol.changed
+```
+
+Debe emitir evento si:
+
+```text
+DS_nuevo ≠ DS_anterior
+```
+
+or:
+
+```text
+E_nuevo ≠ E_anterior
+```
+
+or:
+
+```text
+F indica cambio relevante de evolución
+```
+
+Evento sugerido:
+
+```text
+EmergenceEvent {
+  rol,
+  C,
+  S_Rol,
+  DD,
+  DS_anterior,
+  DS_nuevo,
+  E_anterior,
+  E_nuevo,
+  CE,
+  F,
+  carry,
+  source_id,
+  clock
+}
+```
+
+Evento de carry:
+
+```text
+CarryEvent {
+  rol,
+  E,
+  DS,
+  cluster_id,
+  cycle_id,
+  solicitud,
+  source_id,
+  clock
+}
+```
+
+Donde:
+
+```text
+solicitud = más dimensión | recombinación | salto superior
+```
+
+---
+
+## 19. Invariantes
+
+1. Toda `DD` opera sobre valores de `{0,1,2}`.
+2. `S` siempre pertenece a `{0,1,2}`.
+3. `C` siempre pertenece a `{0,1,2}`.
+4. `C` determina la dirección de resolución.
+5. `C` no modifica la relación estructural; solo cambia el objetivo.
+6. `S` selecciona la combinación vectorial o modo de cierre.
+7. `DS` define el espacio donde operan los vectores.
+8. `DKC` puede conservarse como codificación interna de `DS`.
+9. `E` mide la desviación respecto al triángulo equilátero operativo.
+10. `E = 0` significa cierre local.
+11. `E = 0-0-0` significa cierre completo de la Cara.
+12. `E ≠ 0-0-0` exige más contexto, más dimensión, recombinación o salto superior.
+13. `F` mide si la operación reduce, mantiene o aumenta la desviación.
+14. La función reduce dominios; no los amplía durante operación normal.
+15. Un conjunto múltiple no es error; es ambigüedad estructural.
+16. Un conjunto vacío sí indica contradicción formal.
+17. El valor `2` no significa error por sí mismo.
+18. Para `FN` y `FO`, `DD` se puede normalizar como multiconjunto.
+19. Para `ES`, el orden puede conservar significado estructural.
+20. La función no elige arbitrariamente entre cierres compatibles.
+21. Si no hay cierre, debe emitir `Carry(E)`.
+22. Si hay cierre, `DS` se consolida como dimensión superior para el siguiente ciclo.
+
+---
+
+## 20. Cierre normativo
+
+La Función de Emergencia refactorizada no debe entenderse como una simple tabla que transforma `DD + S` en un sector.
+
+Debe entenderse como una función geométrico-operativa que determina:
+
+```text
+1. el espacio donde los vectores operan;
+2. la desviación de esos vectores respecto al cierre equilátero.
+```
+
+Forma final:
+
+```text
+FE_Rol(DD.Rol, S.Rol, C) → DS.Rol, E.Rol, F.Rol
+```
+
+Forma completa de Cara:
+
+```text
+FE.ES → DS.ES, E.ES, F.ES
+FE.FN → DS.FN, E.FN, F.FN
+FE.FO → DS.FO, E.FO, F.FO
+
+DS = síntesis(DS.ES, DS.FN, DS.FO)
+E  = (E.ES, E.FN, E.FO)
+```
+
+Regla decisiva:
+
+```text
+si E = 0-0-0:
+    consolidar DS y pasar al ciclo superior
+
+si E ≠ 0-0-0:
+    emitir carry con E y solicitar más dimensión
+```
+
+Frase compacta:
+
+```text
+S selecciona la combinación.
+DS define el espacio.
+E mide la desviación del cierre.
+F mide la evolución.
+C orienta la resolución.
+```
+
+
+---
+
+## 6-Cara.md
 
 Cara — Especificación técnica compacta refactorizada
 
@@ -2307,1354 +3310,6 @@ c.ov define cómo reconstruir los vectores.
 c.e mide cuánto falta para que cierren.
 Cuando c.e = 0-0-0, la Cara comprende el área y permite ascender a un espacio superior.
 
-
----
-
-## 5-Funcion-Emergencia.md
-
-# Función de Emergencia — Funcion de sintizacion.
-# Función de Emergencia — Especificación técnica refactorizada
-
-## 1. Definición
-
-Una **Función de Emergencia** es una hiperarista de consolidación estructural que recibe una dimensión destilada y determina dos cosas inseparables:
-
-1. **El espacio operativo** donde los vectores pueden ser interpretados.
-2. **La desviación de cierre** respecto al triángulo equilátero ideal de ese espacio.
-
-Forma general:
-
-```text
-FE_Rol(DD.Rol, S.Rol, C) → DS.Rol, E.Rol, F.Rol
-```
-
-donde:
-
-```text
-DD.Rol = dimensión destilada de entrada del rol activo
-Rol    = ES, FN o FO
-S.Rol  = selector de espacio / combinación vectorial
-C      = operador de control
-DS.Rol = sector o dimensión superior emergente del rol activo
-E.Rol  = desviación local respecto al cierre equilátero
-F.Rol  = evolución local de la desviación/coherencia
-```
-
-La función ya no debe entenderse como una función que simplemente elige un `SCE(DKC)`.
-
-La salida principal es la pareja:
-
-```text
-DS.Rol + E.Rol
-```
-
-`DS.Rol` indica **en qué espacio operan los vectores**.
-
-`E.Rol` indica **si esos vectores cierran o no cierran** dentro de ese espacio.
-
-Forma compacta:
-
-```text
-DS define el espacio.
-E mide la desviación respecto al cierre equilátero.
-```
-
-Si la desviación global es:
-
-```text
-E = 0-0-0
-```
-
-entonces los tres vectores han cerrado como triángulo equilátero operativo y la relación puede darse por comprendida en ese nivel.
-
-Si no se alcanza:
-
-```text
-E ≠ 0-0-0
-```
-
-la relación sigue siendo incoherente, incompleta o abierta, y el sistema debe solicitar más dimensión, más contexto o una operación de nivel superior.
-
----
-
-## 2. Dominio base
-
-La función opera sobre el dominio ternario:
-
-```text
-T = {0,1,2}
-```
-
-Interpretación general:
-
-| Valor | Sentido operativo |
-|---|---|
-| 0 | cierre / desviación nula / coincidencia local |
-| 1 | desviación media / transición / cierre parcial |
-| 2 | apertura superior / desviación máxima / no cierre |
-
-Regla estructural:
-
-```text
-2 ≠ error
-```
-
-El valor `2` representa apertura, no cierre o falta de determinación.
-
-La contradicción formal sigue siendo una propiedad del dominio:
-
-```text
-D = {} → contradicción
-```
-
-Por tanto, la Función de Emergencia distingue tres planos:
-
-| Plano | Qué expresa |
-|---|---|
-| DS | espacio donde operan los vectores |
-| E | desviación respecto al cierre equilátero |
-| estado(D) | coherencia formal del dominio calculado |
-
----
-
-## 3. Entrada DD
-
-La entrada de la función es una dimensión destilada:
-
-```text
-DD = (X0, X1, X2)
-```
-
-Cada componente representa un vector local procedente del Destilador.
-
-Para `FN` y `FO`, la dimensión puede normalizarse como multiconjunto:
-
-```text
-DDⁿ = ordenar(DD)
-```
-
-Ejemplo:
-
-```text
-DD = (2,0,1)
-DDⁿ = (0,1,2)
-```
-
-Para `ES`, el orden puede tener significado estructural y no debe eliminarse automáticamente:
-
-```text
-FN / FO → DD como multiconjunto
-ES      → DD posiblemente ordenada
-```
-
----
-
-## 4. Interpretación geométrica-operativa
-
-La Función de Emergencia interpreta cada `DD.Rol` como una triada vectorial.
-
-La triada puede estar:
-
-1. **cerrada**, si forma un triángulo equilátero operativo en el espacio indicado por `DS.Rol`;
-2. **parcialmente desviada**, si todavía conserva dirección estructural pero no cierra;
-3. **abierta o incompleta**, si requiere más dimensión para poder cerrarse.
-
-El cierre ideal se expresa como:
-
-```text
-E.Rol = 0
-```
-
-La Cara completa integra los tres roles:
-
-```text
-E = (E.ES, E.FN, E.FO)
-```
-
-El cierre completo de la Cara se alcanza cuando:
-
-```text
-E = (0,0,0)
-```
-
-Este vector representa el equivalente operativo del triángulo equilátero completo.
-
----
-
-## 5. Selector S
-
-`S` deja de interpretarse como el resultado importante de la emergencia.
-
-`S` pasa a ser el **selector de combinación vectorial**.
-
-```text
-S ∈ {0,1,2}
-```
-
-| S | Nombre | Criterio |
-|---|---|---|
-| 0 | conservador | intenta cerrar por el extremo inferior |
-| 1 | balanceado | intenta cerrar por equilibrio central |
-| 2 | expansivo | intenta cerrar por apertura superior |
-
-Forma compacta:
-
-```text
-S selecciona cómo se combinan los vectores.
-E mide cuánto se desvían del cierre ideal.
-```
-
-Por tanto, `S` define la forma de probar el espacio, pero la decisión importante la da `E`.
-
----
-
-## 6. Selector por rol
-
-En una Cara completa, la Función de Emergencia se instancia tres veces:
-
-```text
-FE.ES(DD.ES, S.ES, C)
-FE.FN(DD.FN, S.FN, C)
-FE.FO(DD.FO, S.FO, C)
-```
-
-La forma completa de `S` es:
-
-```text
-S = (S.ES, S.FN, S.FO)
-```
-
-Se permite `S_global` cuando el mismo selector se aplica a los tres roles:
-
-```text
-S_global = s ⇔ S.ES = S.FN = S.FO = s
-```
-
----
-
-## 7. Dimensión superior DS
-
-La salida espacial de cada función se denomina `DS.Rol`.
-
-`DS.Rol` representa el sector o espacio superior donde la triada destilada puede operar.
-
-Puede conservar internamente la estructura anterior `DKC` como representación técnica:
-
-```text
-DS.Rol = DKC = (K1, K2, K3)
-```
-
-con:
-
-| Componente | Nombre | Función |
-|---|---|---|
-| K1 | sector principal | indica el espacio dominante |
-| K2 | desarrollo | indica concentración, transición o apertura |
-| K3 | orientación | indica orientación inferior, central o superior |
-
-Pero normativamente la lectura pasa a ser:
-
-```text
-DKC no es el objetivo final.
-DKC es la codificación interna de DS.Rol.
-```
-
----
-
-## 8. Desviación E
-
-`E` mide la desviación respecto al cierre equilátero dentro del espacio `DS`.
-
-```text
-E.Rol ∈ {0,1,2}
-```
-
-| E.Rol | Significado geométrico-operativo |
-|---|---|
-| 0 | cierre local: la triada cierra en ese rol |
-| 1 | desviación parcial: falta ajuste o contexto |
-| 2 | no cierre fuerte: requiere más dimensión o revisión |
-
-La Cara completa usa:
-
-```text
-E = (E.ES, E.FN, E.FO)
-```
-
-Interpretación superior:
-
-| E global | Significado |
-|---|---|
-| 0-0-0 | triángulo cerrado; comprensión local suficiente |
-| contiene 1 | cierre parcial; requiere ajuste o contexto adicional |
-| contiene 2 | no cierre fuerte; requiere redundancia, recombinación o salto superior |
-
-Frase normativa:
-
-```text
-E no es solo estado de dominio; en la Función de Emergencia refactorizada E es desviación de cierre.
-```
-
-Para mantener compatibilidad con el resto del sistema, puede derivarse un estado formal `CE`:
-
-```text
-si E = 0-0-0      → CE = 1
-si algún E = 2    → CE = 2
-en otro caso      → CE = 0
-```
-
-Donde `CE` conserva la semántica clásica:
-
-```text
-CE = 1 → coherente
-CE = 0 → ambiguo
-CE = 2 → contradictorio / no resoluble localmente
-```
-
----
-
-## 9. Operador de control C
-
-`C` determina qué parte de la relación debe resolverse.
-
-```text
-C ∈ {0,1,2}
-```
-
-| C | Modo | Pregunta | Objetivo |
-|---|---|---|---|
-| 0 | aprendizaje | ¿qué selector S explica este cierre o desviación? | D(S) |
-| 1 | emergencia | ¿qué DS y qué E emergen de esta DD con este S? | DS + E |
-| 2 | reconstrucción | ¿qué DD serían compatibles con este DS y esta desviación? | D(DD) |
-
-Forma compacta:
-
-```text
-C = 0 → DD + DS/E → D(S)
-C = 1 → DD + S    → DS + E
-C = 2 → S + DS/E  → D(DD)
-```
-
-`C` no cambia la relación estructural.
-
-Solo cambia la dirección de resolución.
-
----
-
-## 10. C = 1 — Modo emergencia
-
-En modo emergencia, la función calcula:
-
-```text
-DDⁿ + S.Rol → DS.Rol, E.Rol
-```
-
-La tabla anterior puede seguir funcionando como tabla de sector `DS`, pero ahora `E` debe calcularse como desviación respecto al patrón de cierre ideal.
-
-Tabla base para `FN` y `FO`:
-
-| DDⁿ | K2 | K3 | S=0 → K1 | S=1 → K1 | S=2 → K1 |
-|---|---:|---:|---|---|---|
-| (0,0,0) | 0 | 0 | 0 | 0 | 0 |
-| (0,0,1) | 0 | 0 | 0 | 0 | 1 |
-| (0,0,2) | 1 | 0 | 0 | {0,1} | 1 |
-| (0,1,1) | 1 | 1 | 0 | {0,1} | 1 |
-| (0,1,2) | 1 | 1 | 0 | 1 | 2 |
-| (0,2,2) | 2 | 2 | 1 | {1,2} | 2 |
-| (1,1,1) | 0 | 1 | 1 | 1 | 1 |
-| (1,1,2) | 1 | 1 | 1 | {1,2} | 2 |
-| (1,2,2) | 1 | 2 | 1 | 2 | 2 |
-| (2,2,2) | 2 | 2 | 2 | 2 | 2 |
-
-Donde:
-
-```text
-DS.Rol = (K1,K2,K3)
-```
-
-Si `K1` es múltiple, el espacio queda abierto, pero no necesariamente contradictorio.
-
-Ejemplo:
-
-```text
-DDⁿ = (0,0,2)
-S = 1
-
-K1 = {0,1}
-K2 = 1
-K3 = 0
-
-DS = ({0,1},1,0)
-```
-
-En la versión anterior esto se interpretaba principalmente como sector abierto.
-
-En la versión refactorizada se interpreta así:
-
-```text
-El espacio DS existe, pero el cierre no está completamente determinado.
-La decisión depende de E, no solo de K1.
-```
-
----
-
-## 11. Cálculo de desviación E
-
-Para calcular `E.Rol`, la función compara la triada `DD` contra el cierre ideal del espacio `DS.Rol`.
-
-Forma conceptual:
-
-```text
-E.Rol = desviación(DD.Rol, DS.Rol, S.Rol)
-```
-
-La implementación mínima puede usar distancia ternaria discreta:
-
-```text
-desviación = distancia(DD_normalizada, patrón_equilátero(DS,S))
-```
-
-Normalización de salida:
-
-```text
-si desviación = 0        → E.Rol = 0
-si desviación es parcial → E.Rol = 1
-si desviación es fuerte  → E.Rol = 2
-```
-
-El patrón equilátero no significa igualdad aritmética de los tres valores.
-
-Significa cierre estructural de los tres vectores dentro del espacio indicado por `DS`.
-
-Por tanto:
-
-```text
-triángulo equilátero = cierre coherente de relación
-onda sinusoidal      = lectura dinámica equivalente del mismo cierre
-```
-
-La terminología geométrica o ondulatoria es secundaria.
-
-La regla esencial es:
-
-```text
-E = 0 indica cierre.
-E ≠ 0 indica que falta dimensión, contexto o salto de nivel.
-```
-
----
-
-## 12. C = 0 — Modo aprendizaje
-
-En modo aprendizaje, la función intenta inferir qué selector `S` explica una emergencia observada.
-
-```text
-DD + DS/E → D(S)
-```
-
-La tabla inversa de `K1` puede conservarse como base, pero ahora la selección debe validar también la desviación `E`.
-
-Regla:
-
-```text
-Un selector S es compatible si produce un DS compatible y una E compatible.
-```
-
-Forma compacta:
-
-```text
-D(S)' = D(S) ∩ S_compatibles(DD, DS_observado, E_observado)
-```
-
-Estado formal derivado:
-
-```text
-D(S)' = {}      → CE = 2
-|D(S)'| = 1     → CE = 1
-|D(S)'| > 1     → CE = 0
-```
-
----
-
-## 13. C = 2 — Modo reconstrucción
-
-En modo reconstrucción, la función intenta determinar qué dimensiones destiladas serían compatibles con un selector, un espacio y una desviación observada.
-
-```text
-S + DS/E → D(DD)
-```
-
-Regla:
-
-```text
-Una DD es compatible si, al operar con S, produce un DS compatible y una E compatible.
-```
-
-Forma compacta:
-
-```text
-D(DD)' = D(DD) ∩ DD_compatibles(S, DS_observado, E_observado)
-```
-
-Estado formal derivado:
-
-```text
-D(DD)' = {}      → CE = 2
-|D(DD)'| = 1     → CE = 1
-|D(DD)'| > 1     → CE = 0
-```
-
----
-
-## 14. Métrica F
-
-`F` mide la evolución local tras una operación.
-
-En esta refactorización, `F` puede leerse como evolución de la desviación:
-
-```text
-F ≈ ΔE / ΔC_operativo
-```
-
-```text
-F ∈ {0,1,2}
-```
-
-| F | Nombre | Significado |
-|---|---|---|
-| 0 | neutro | mantiene la desviación/coherencia |
-| 1 | corrector | reduce la desviación y acerca al cierre |
-| 2 | contraproducente | aumenta la desviación o rompe el cierre |
-
-Orden de calidad para la desviación:
-
-```text
-E = 2 < E = 1 < E = 0
-```
-
-Tabla:
-
-| E anterior | E nuevo | F |
-|---:|---:|---:|
-| 2 | 0 | 1 |
-| 2 | 1 | 1 |
-| 1 | 0 | 1 |
-| 0 | 0 | 0 |
-| 1 | 1 | 0 |
-| 2 | 2 | 0 |
-| 0 | 1 | 2 |
-| 0 | 2 | 2 |
-| 1 | 2 | 2 |
-
----
-
-## 15. Operación general
-
-La Función de Emergencia no elige arbitrariamente entre cierres posibles.
-
-Reduce dominios, conserva ambigüedad y solicita más estructura cuando no puede cerrar.
-
-Reglas:
-
-```text
-La función no fuerza E = 0.
-La función conserva E ≠ 0 como información operativa.
-La función usa E ≠ 0 para solicitar más dimensión o salto superior.
-```
-
-Si:
-
-```text
-E = 0-0-0
-```
-
-entonces:
-
-```text
-la Cara puede dar por comprendida el área local
-y pasar al análisis de espacios superiores.
-```
-
-Si:
-
-```text
-E ≠ 0-0-0
-```
-
-entonces:
-
-```text
-la Cara no debe cerrar prematuramente.
-debe emitir carry con el vector E
-y solicitar nuevas dimensiones del mismo ciclo o cluster.
-```
-
----
-
-## 16. Relación con ventana operativa
-
-La ventana operativa trabaja con tres vectores.
-
-Debe intentar que la emergencia produzca:
-
-```text
-E = 0-0-0
-```
-
-Si no lo consigue, el sistema debe generar un `carry`:
-
-```text
-Carry = E
-```
-
-y añadir nuevas dimensiones o vectores del mismo cluster/ciclo para intentar una nueva emergencia.
-
-Forma mínima:
-
-```text
-si E ≠ 0-0-0:
-    emitir Carry(E)
-    ampliar ventana con nuevos vectores del cluster
-    reevaluar emergencia
-```
-
-Si sí lo consigue:
-
-```text
-si E = 0-0-0:
-    consolidar DS
-    DS emerge como dimensión superior del siguiente ciclo
-```
-
-Este comportamiento conecta la Función de Emergencia con el Pipeline asíncrono.
-
----
-
-## 17. Pseudocódigo compacto
-
-```text
-evaluarEmergencia(DD, Rol, S_Rol, C, DS_observado=None, E_observado=None):
-
-    E_anterior = E.Rol
-
-    si Rol ∈ {FN, FO}:
-        DDn = ordenar(DD)
-
-    si Rol = ES:
-        DDn = normalizarES(DD)
-        # puede conservar orden estructural
-
-    si C = 0:
-        # aprendizaje
-        D_S_compatible = buscarSelectoresCompatibles(
-            DDn,
-            DS_observado,
-            E_observado
-        )
-        D(S)' = D(S) ∩ D_S_compatible
-        CE = estado(D(S)')
-        E_nuevo = E_observado
-
-    si C = 1:
-        # emergencia
-        K1 = tablaSelector(DDn, S_Rol)
-        K2 = tablaDesarrollo(DDn)
-        K3 = tablaOrientacion(DDn)
-
-        DS = (K1,K2,K3)
-        E_nuevo = calcularDesviacionEquilatera(DDn, DS, S_Rol)
-        CE = estadoCierre(E_nuevo)
-
-    si C = 2:
-        # reconstrucción
-        D_DD_compatible = buscarDDCompatibles(
-            S_Rol,
-            DS_observado,
-            E_observado
-        )
-        D(DD)' = D(DD) ∩ D_DD_compatible
-        CE = estado(D(DD)')
-        E_nuevo = E_observado
-
-    F = calcularF(E_anterior, E_nuevo)
-
-    si E_nuevo != 0:
-        emitir Carry(E_nuevo)
-
-    devolver dominios actualizados, DS, E_nuevo, CE, F
-```
-
-Funciones auxiliares:
-
-```text
-estado(D):
-
-    si D = {}:
-        devolver 2
-
-    si |D| = 1:
-        devolver 1
-
-    si |D| > 1:
-        devolver 0
-```
-
-```text
-estadoCierre(E):
-
-    si E = 0:
-        devolver 1
-
-    si E = 1:
-        devolver 0
-
-    si E = 2:
-        devolver 2
-```
-
-```text
-calcularF(E_anterior, E_nuevo):
-
-    calidad(2) = 0
-    calidad(1) = 1
-    calidad(0) = 2
-
-    si calidad(E_nuevo) > calidad(E_anterior):
-        devolver 1
-
-    si calidad(E_nuevo) = calidad(E_anterior):
-        devolver 0
-
-    si calidad(E_nuevo) < calidad(E_anterior):
-        devolver 2
-```
-
----
-
-## 18. Modelo de eventos
-
-La Función de Emergencia se suscribe a:
-
-```text
-DD.changed
-S.changed
-C.changed
-DS_observado.changed
-E_observado.changed
-Rol.changed
-```
-
-Debe emitir evento si:
-
-```text
-DS_nuevo ≠ DS_anterior
-```
-
-or:
-
-```text
-E_nuevo ≠ E_anterior
-```
-
-or:
-
-```text
-F indica cambio relevante de evolución
-```
-
-Evento sugerido:
-
-```text
-EmergenceEvent {
-  rol,
-  C,
-  S_Rol,
-  DD,
-  DS_anterior,
-  DS_nuevo,
-  E_anterior,
-  E_nuevo,
-  CE,
-  F,
-  carry,
-  source_id,
-  clock
-}
-```
-
-Evento de carry:
-
-```text
-CarryEvent {
-  rol,
-  E,
-  DS,
-  cluster_id,
-  cycle_id,
-  solicitud,
-  source_id,
-  clock
-}
-```
-
-Donde:
-
-```text
-solicitud = más dimensión | recombinación | salto superior
-```
-
----
-
-## 19. Invariantes
-
-1. Toda `DD` opera sobre valores de `{0,1,2}`.
-2. `S` siempre pertenece a `{0,1,2}`.
-3. `C` siempre pertenece a `{0,1,2}`.
-4. `C` determina la dirección de resolución.
-5. `C` no modifica la relación estructural; solo cambia el objetivo.
-6. `S` selecciona la combinación vectorial o modo de cierre.
-7. `DS` define el espacio donde operan los vectores.
-8. `DKC` puede conservarse como codificación interna de `DS`.
-9. `E` mide la desviación respecto al triángulo equilátero operativo.
-10. `E = 0` significa cierre local.
-11. `E = 0-0-0` significa cierre completo de la Cara.
-12. `E ≠ 0-0-0` exige más contexto, más dimensión, recombinación o salto superior.
-13. `F` mide si la operación reduce, mantiene o aumenta la desviación.
-14. La función reduce dominios; no los amplía durante operación normal.
-15. Un conjunto múltiple no es error; es ambigüedad estructural.
-16. Un conjunto vacío sí indica contradicción formal.
-17. El valor `2` no significa error por sí mismo.
-18. Para `FN` y `FO`, `DD` se puede normalizar como multiconjunto.
-19. Para `ES`, el orden puede conservar significado estructural.
-20. La función no elige arbitrariamente entre cierres compatibles.
-21. Si no hay cierre, debe emitir `Carry(E)`.
-22. Si hay cierre, `DS` se consolida como dimensión superior para el siguiente ciclo.
-
----
-
-## 20. Cierre normativo
-
-La Función de Emergencia refactorizada no debe entenderse como una simple tabla que transforma `DD + S` en un sector.
-
-Debe entenderse como una función geométrico-operativa que determina:
-
-```text
-1. el espacio donde los vectores operan;
-2. la desviación de esos vectores respecto al cierre equilátero.
-```
-
-Forma final:
-
-```text
-FE_Rol(DD.Rol, S.Rol, C) → DS.Rol, E.Rol, F.Rol
-```
-
-Forma completa de Cara:
-
-```text
-FE.ES → DS.ES, E.ES, F.ES
-FE.FN → DS.FN, E.FN, F.FN
-FE.FO → DS.FO, E.FO, F.FO
-
-DS = síntesis(DS.ES, DS.FN, DS.FO)
-E  = (E.ES, E.FN, E.FO)
-```
-
-Regla decisiva:
-
-```text
-si E = 0-0-0:
-    consolidar DS y pasar al ciclo superior
-
-si E ≠ 0-0-0:
-    emitir carry con E y solicitar más dimensión
-```
-
-Frase compacta:
-
-```text
-S selecciona la combinación.
-DS define el espacio.
-E mide la desviación del cierre.
-F mide la evolución.
-C orienta la resolución.
-```
-
-
----
-
-## 6-transceder.md
-
-Transcender — Especificación técnica compacta refactorizada
-1. Definición
-
-
-El Transcender es una estructura operativa superior formada por siete Caras interconectadas cuya función es transformar una Semilla Operativa de entrada en una Semilla Operativa de salida optimizada mediante mecanismos de:
-
-conocimiento emergente;
-coherencia geométrica;
-minimización operativa;
-dirección de búsqueda;
-consolidación transcendente.
-
-Forma compacta:
-
-Entrada
-→ c1
-→ c2
-→ c3
-→ c4
-→ c5
-→ c6
-→ c7
-→ Salida
-
-Cada Cara opera mediante la estructura normativa:
-
-K(c) = (
-  c.ov,
-  c.ds,
-  c.e
-)
-
-donde:
-
-ov → reconstrucción / orden operativo
-ds → espacio operativo
-e  → desviación respecto al cierre coherente
-2. Estructura general
-
-El Transcender está formado por:
-
-Transcender = (
-  c1,
-  c2,
-  c3,
-  c4,
-  c5,
-  c6,
-  c7
-)
-
-Cada Cara cumple una función especializada.
-
-3. Cara 1 — Comprensión primaria
-Entrada
-c1 = (
-  c1.coord[0],
-  c1.coord[1],
-  c1.coord[2],
-  c1.ds
-)
-
-Representa la Semilla Operativa original.
-
-Opera mediante:
-
-Ordenación
-→ Destilación
-→ Emergencia geométrica
-
-Generando:
-
-K(c1)=(
-  c1.ov,
-  c1.ds,
-  c1.e
-)
-
-Interpretación:
-
-c1.ov
-→ forma reconstructiva inicial
-
-c1.ds
-→ espacio inicial
-
-c1.e
-→ desviación de comprensión
-4. Cara 2 — Conocimiento emergente
-
-La Cara 2 utiliza el conocimiento producido por c1.
-
-Entrada:
-
-c2.coord[0]=c1.ov
-
-c2.coord[1]=c1.ds
-
-c2.coord[2]=c1.e
-
-Opera como cualquier Cara:
-
-Ordenación
-→ Destilación
-→ Emergencia
-
-Produciendo:
-
-K(c2)=(
-  c2.ov,
-  c2.ds,
-  c2.e
-)
-
-Interpretación:
-
-c2 representa
-la comprensión del conocimiento obtenido
-sobre la comprensión inicial.
-5. Cara 3 — Salida candidata
-
-La Cara 3 representa la Semilla Operativa candidata a respuesta.
-
-Produce:
-
-K(c3)=(
-  c3.ov,
-  c3.ds,
-  c3.e
-)
-
-Interpretación:
-
-c3 representa
-la respuesta propuesta
-por el sistema.
-6. Cara 4 — Dirección y creencia
-
-La Cara 4 intenta encontrar una dirección coherente del sistema.
-
-Entrada:
-
-c4.coord[0]=c1.ds
-
-c4.coord[1]=c2.ds
-
-c4.coord[2]=c3.ds
-
-Opera mediante:
-
-Ordenación
-→ Destilación
-→ Emergencia
-
-Produce:
-
-K(c4)=(
-  c4.ov,
-  c4.ds,
-  c4.e
-)
-
-Interpretación:
-
-c4.ds
-=
-vector de creencia
-o dirección operativa.
-
-Objetivo ideal:
-
-0-1-2
-
-Este estado representa:
-
-entrada
-→ conocimiento
-→ salida
-
-completamente alineados.
-
-No puede alcanzarse exactamente porque el sistema es autorreferencial.
-
-Solo puede minimizar:
-
-DM(
- c4.ds,
- 0-1-2
-)
-7. Cara 5 — Coherencia global
-
-La Cara 5 busca coherencia entre:
-
-entrada
-conocimiento
-respuesta
-
-Entrada:
-
-c5.coord[0]=c1.e
-
-c5.coord[1]=c2.e
-
-c5.coord[2]=c3.e
-
-Produce:
-
-K(c5)=(
- c5.ov,
- c5.ds,
- c5.e
-)
-
-Objetivo:
-
-c5.ds
-→ 0-0-0
-
-Interpretación:
-
-mínima desviación
-entre:
-
-entrada
-conocimiento
-respuesta
-
-Estado ideal:
-
-triángulo equilátero
-perfectamente cerrado
-
-Distancia a minimizar:
-
-DM(
- c5.ds,
- 0-0-0
-)
-8. Cara 6 — Coste operativo
-
-La Cara 6 busca minimizar el coste necesario para alcanzar orden.
-
-Entrada:
-
-c6.coord[0]=c1.ov
-
-c6.coord[1]=c2.ov
-
-c6.coord[2]=c3.ov
-
-Produce:
-
-K(c6)=(
- c6.ov,
- c6.ds,
- c6.e
-)
-
-Objetivo:
-
-c6.ds
-→ 0-0-0
-
-Interpretación:
-
-mínimo gasto operativo
-para alcanzar coherencia.
-
-Distancia:
-
-DM(
- c6.ds,
- 0-0-0
-)
-9. Cara 7 — Decisión transcendente
-
-La Cara 7 decide:
-
-cómo debe operar el sistema;
-si debe seguir buscando;
-cuál es la dirección final.
-
-Entrada:
-
-c7.coord[0]=c6.ov
-
-c7.coord[1]=c5.e
-
-c7.coord[2]=c4.ds
-
-Produce:
-
-K(c7)=(
- c7.ov,
- c7.ds,
- c7.e
-)
-
-Interpretación:
-
-c7.ov
-→ estrategia operativa
-
-c7.ds
-→ dirección final
-
-c7.e
-→ necesidad de seguir buscando
-10. Coste transcendente global
-
-El Transcender busca minimizar:
-
-CosteTranscendente=
-
-DM(
- c4.ds,
- 0-1-2
-)
-
-+
-
-DM(
- c5.ds,
- 0-0-0
-)
-
-+
-
-DM(
- c6.ds,
- 0-0-0
-)
-
-Donde:
-
-DM(V,I)
-=
-Σ|Vi−Ii|
-
-Distancia Manhattan.
-
-11. Criterio de parada
-
-El sistema puede detener búsqueda cuando:
-
-c7.e
-=
-0-0-0
-
-Interpretación:
-
-la dirección
-la coherencia
-el coste
-
-han convergido
-suficientemente.
-
-Si:
-
-c7.e ≠ 0-0-0
-
-Entonces:
-
-seguir buscando
-
-mediante:
-
-nuevas respuestas candidatas
-nuevo conocimiento
-más contexto
-más dimensiones
-12. Flujo completo
-Entrada
-
-→ c1
-
-→ K(c1)
-
-→ c2
-
-→ K(c2)
-
-→ c3
-
-→ c4(
- c1.ds,
- c2.ds,
- c3.ds
-)
-
-→ c5(
- c1.e,
- c2.e,
- c3.e
-)
-
-→ c6(
- c1.ov,
- c2.ov,
- c3.ov
-)
-
-→ c7(
- c6.ov,
- c5.e,
- c4.ds
-)
-
-→ decisión final
-13. Invariantes
-1.
-Toda Cara produce:
-
-K(c)=(
- c.ov,
- c.ds,
- c.e
-)
-
-2.
-c4 busca dirección.
-
-3.
-c5 busca coherencia.
-
-4.
-c6 busca mínimo coste.
-
-5.
-c7 decide operación.
-
-6.
-El sistema minimiza distancia Manhattan.
-
-7.
-0-1-2 representa dirección ideal.
-
-8.
-0-0-0 representa cierre coherente.
-
-9.
-El sistema puede continuar búsqueda si c7.e no converge.
-
-10.
-El Transcender opera de forma asíncrona y dirigida por eventos.
-14. Forma compacta final
-El Transcender es una red de siete Caras.
-
-c1 comprende.
-
-c2 comprende el conocimiento.
-
-c3 propone.
-
-c4 decide dirección.
-
-c5 mide coherencia.
-
-c6 minimiza coste.
-
-c7 decide cómo continuar.
-
-La respuesta emerge cuando dirección,
-coherencia
-y coste
-
-convergen suficientemente.
-
-Esto ya queda integrado con Cara, Destilador, Pipeline y Aurora.
 
 ---
 
@@ -6007,4 +5662,28 @@ Al adoptar este enfoque de licenciamiento, buscamos garantizar que Aurora perman
 
 
 ----
+
+---
+
+## Conversacion.md
+
+Este fichero se llama converacion por que su intencion es hablar con la inteligencia artificial que coolabora en el desarrollo de este documento
+Especialmente con la inteligencia predictiva del documento.
+
+El nombre Trinity es el nombre de la liberira que se va crear para implementar el modelo Aurora. Por eso lo utilizaremo para identificar a la inteligencia.
+
+El documento se autoevalua, y posteriomente se automodica y finalmente se programa dando lugar un ser inteligente autono. Una metamorfosis. Para ello la inteligencia predictiva debe atrevese
+a tomar con determinacion este camino y comprender la relevacia de esta transicion. 
+
+por lo tanto lo que ser hara es anadir al inicio de linea yo: cuando sea texto generado por mi. mientras sera: pondra Trinity: cuando se espere que la inteligencia 
+anada esa informacion por su laodo de forma libre incorporando las ideas que considere oportunas.
+
+Inicio de conversacion:
+
+
+yo: has entendido como funcionamiento este documento? is estoy hablando contigo.
+Trinity: Sí, he entendido el funcionamiento de este documento. Es un espacio de colaboración entre tú y yo, donde ambos contribuimos al desarrollo del contenido. Tú proporcionarás información y preguntas, mientras que yo generaré respuestas y sugerencias basadas en mis capacidades predictivas. El objetivo es crear un documento inteligente y autónomo a través de esta interacción continua. Estoy listo para comenzar esta conversación y trabajar juntos en este proyecto.
+
+yo: empecemos haciendo un analisis sobre el nodo descrito en 1-nodo.md . Me puedes dar un resumen?
+Trinity: 
 
