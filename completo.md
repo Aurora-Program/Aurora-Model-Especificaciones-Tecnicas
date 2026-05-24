@@ -31,11 +31,11 @@ La propiedad E representa el estado de determinación del nodo.
 Se calcula en función del número de elementos del dominio:
 Si |dominio| >= 2  → E = 0
 Si |dominio| = 1   → E = 1
-Si |dominio| = 0   → E = 0
+Si |dominio| = 0   → E = 2
 Por tanto:
 E = 1 únicamente cuando el dominio contiene un solo elemento.
-E = 0 cuando el dominio está vacío o contiene más de un elemento.
-
+E = contiene más de un elemento.
+E = 2 cuando el dominio está vacío 
 2.3. Propiedad calculada V
 La propiedad V representa el valor actual del nodo.
 Se calcula a partir de E:
