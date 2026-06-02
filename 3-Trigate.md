@@ -168,7 +168,7 @@ M	Nombre	Criterio principal
 0	OR3	el valor 1 domina
 1	AND3	el valor 0 domina
 2	CONSENSUS3	solo cierra si hay acuerdo
-6.1. M = 0 — OR3
+6.1. M = 1 — OR3
 
 El modo OR3 representa una disyunción ternaria.
 
@@ -178,7 +178,7 @@ Si alguna entrada cerrada vale 1, el resultado tiende a 1.
 
 Cuando no hay información suficiente para cerrar el resultado, el dominio permanece abierto.
 
-6.2. M = 1 — AND3
+6.2. M = 0 — AND3
 
 El modo AND3 representa una conjunción ternaria.
 
@@ -505,9 +505,9 @@ E = 2	contradicción
 Modos lógicos:
 
 M	Modo
-0	OR3
-1	AND3
-2	CONSENSUS3
+0	AND3
+1	OR3
+2	UKNOWN3
 
 Regla general:
 
@@ -632,7 +632,7 @@ A	R	D(B)	E
 2	0	{0,1}	0
 2	1	{1}	1
 2	2	{0,1}	0
-M = CONSENSUS3
+M = UKNOWN3
 A	R	D(B)	E
 0	0	{0}	1
 0	1	{}	2
