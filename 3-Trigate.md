@@ -95,17 +95,17 @@ Los nodos del sistema operan internamente como dominios ternarios, pero pueden e
 Regla de valor operativo:
 
 Dominio interno	Valor operativo	Estado
-{0}	0	E = 1
+{0}	0	E = 0
 {1}	1	E = 1
-{2}	2	E = 0
+{2}	2	E = 2
 dominio con más de un elemento	2	E = 0
 {}	2	E = 2
 
 Forma compacta:
 
 Dominio unitario cerrado → valor del único elemento, E = 1
-Dominio múltiple        → valor operativo 2, E = 0
-Dominio vacío           → valor operativo 2, E = 2
+Dominio múltiple        → valor operativo 2, E = 2
+Dominio vacío           → valor operativo 2, E = 0
 
 Esta regla permite propagar valores simples sin perder la información formal del dominio interno.
 
@@ -115,7 +115,7 @@ El estado E describe la coherencia local de la resolución realizada por el Trig
 
 E ∈ {0, 1, 2}
 E	Nombre	Significado
-0	ambiguo	la resolución sigue abierta
+2	ambiguo	la resolución sigue abierta
 1	coherente	la resolución queda cerrada de forma consistente
 2	contradictorio	no existe solución local compatible
 
@@ -165,9 +165,9 @@ La variable M indica qué operación lógica ternaria relaciona A, B y R.
 
 M ∈ {0, 1, 2}
 M	Nombre	Criterio principal
-0	OR3	el valor 1 domina
-1	AND3	el valor 0 domina
-2	CONSENSUS3	solo cierra si hay acuerdo
+0	AND3	el valor 1 domina
+1	OR3	el valor 0 domina
+2	UKNOWN3	solo cierra si hay acuerdo
 6.1. M = 1 — OR3
 
 El modo OR3 representa una disyunción ternaria.
@@ -366,7 +366,7 @@ E_nuevo ≠ E_anterior
 
 En particular:
 
-E = 2
+E = 20
 
 puede activar mecanismos de redundancia, revisión o intervención de capas superiores.
 
@@ -376,9 +376,9 @@ La métrica F describe la evolución local de coherencia de un Trigate tras una 
 
 F ∈ {0, 1, 2}
 F	Nombre	Significado
-0	neutro	la operación mantiene la coherencia local
+2	neutro	la operación mantiene la coherencia local
 1	corrector	la operación mejora la coherencia local
-2	contraproducente	la operación empeora la coherencia local
+0	contraproducente	la operación empeora la coherencia local
 
 Diferencia entre E y F:
 
@@ -401,15 +401,15 @@ E	Calidad
 1	coherencia cerrada
 11.2. Tabla de transición
 E anterior	E nuevo	F	Interpretación
-2	1	1	corrección fuerte
+2	1	1	cierre coherente
 2	0	1	reducción de contradicción a ambigüedad
-0	1	1	cierre coherente
-1	1	0	estabilidad coherente
-0	0	0	ambigüedad estable
-2	2	0	contradicción persistente
-1	0	2	pérdida de cierre
-1	2	2	caída a contradicción
-0	2	2	ambigüedad convertida en contradicción
+0	1	1	corrección fuerte 
+1	1	2	estabilidad coherente
+2	2	2	ambigüedad estable
+0	0	2	contradicción persistente
+1	2	0	pérdida de cierre
+1	0	0	caída a contradicción
+2	0	0	ambigüedad convertida en contradicción
 11.3. Uso arquitectónico de F
 
 F sirve para que capas superiores puedan:
@@ -466,27 +466,27 @@ Funciones auxiliares:
 estado(D):
 
   si D = {}:
-      devolver 2
+      devolver 0
 
   si |D| = 1:
       devolver 1
 
   si |D| > 1:
-      devolver 0
+      devolver 2
 calcularF(E_anterior, E_nuevo):
 
-  calidad(2) = 0
+  calidad(2) = 2
   calidad(0) = 1
-  calidad(1) = 2
+  calidad(1) = 1
 
   si calidad(E_nuevo) > calidad(E_anterior):
       devolver 1
 
   si calidad(E_nuevo) = calidad(E_anterior):
-      devolver 0
+      devolver 2
 
   si calidad(E_nuevo) < calidad(E_anterior):
-      devolver 2
+      devolver 0
 13. Tablas normativas
 
 Las tablas normativas definen el comportamiento mínimo esperado del Trigate.
@@ -498,9 +498,9 @@ Símbolo	Significado
 0	LOW
 1	HIGH
 2	desconocido / no resuelto
-E = 0	ambiguo
+E = 2	ambiguo
 E = 1	coherente
-E = 2	contradicción
+E = 0	contradicción
 
 Modos lógicos:
 
@@ -511,43 +511,43 @@ M	Modo
 
 Regla general:
 
-D = {}          → E = 2
+D = {}          → E = 0
 D = {0} o {1}  → E = 1
-D múltiple     → E = 0
-D = {2}        → E = 0
+D múltiple     → E = 2
+D = {2}        → E = 2
 13.2. C = 0 — Aprendizaje
 
 En modo aprendizaje:
 
 A, B, R → D(M), E
 A	B	R	D(M)	E
-0	0	0	{OR, AND, CONS}	0
-0	0	1	{}	2
-0	0	2	{OR, AND, CONS}	0
+0	0	0	{OR, AND, CONS}	2
+0	0	1	{}	0
+0	0	2	{OR, AND, CONS}	2
 0	1	0	{AND}	1
 0	1	1	{OR}	1
-0	1	2	{OR, AND, CONS}	0
-0	2	0	{OR, AND, CONS}	0
+0	1	2	{OR, AND, CONS}	2
+0	2	0	{OR, AND, CONS}	2
 0	2	1	{OR}	1
-0	2	2	{OR, AND, CONS}	0
+0	2	2	{OR, AND, CONS}	2
 1	0	0	{AND}	1
 1	0	1	{OR}	1
-1	0	2	{OR, AND, CONS}	0
+1	0	2	{OR, AND, CONS}	2
 1	1	0	{}	2
-1	1	1	{OR, AND, CONS}	0
-1	1	2	{OR, AND, CONS}	0
+1	1	1	{OR, AND, CONS}	2
+1	1	2	{OR, AND, CONS}	2
 1	2	0	{AND}	1
-1	2	1	{OR, AND, CONS}	0
-1	2	2	{OR, AND, CONS}	0
-2	0	0	{OR, AND, CONS}	0
+1	2	1	{OR, AND, CONS}	2
+1	2	2	{OR, AND, CONS}	2
+2	0	0	{OR, AND, CONS}	2
 2	0	1	{OR}	1
-2	0	2	{OR, AND, CONS}	0
+2	0	2	{OR, AND, CONS}	2
 2	1	0	{AND}	1
-2	1	1	{OR, AND, CONS}	0
-2	1	2	{OR, AND, CONS}	0
-2	2	0	{OR, AND, CONS}	0
-2	2	1	{OR, AND, CONS}	0
-2	2	2	{OR, AND, CONS}	0
+2	1	1	{OR, AND, CONS}	2
+2	1	2	{OR, AND, CONS}	2
+2	2	0	{OR, AND, CONS}	2
+2	2	1	{OR, AND, CONS}	2
+2	2	2	{OR, AND, CONS}	2
 
 Lectura normativa:
 
@@ -556,7 +556,7 @@ Aprender = reducir D(M)
 Si ningún modo explica la observación:
 
 D(M) = {}
-E = 2
+E = 0
 
 Si un único modo explica la observación:
 
@@ -566,7 +566,7 @@ E = 1
 Si varios modos explican la observación:
 
 |D(M)| > 1
-E = 0
+E = 2
 13.3. C = 1 — Inferencia
 
 En modo inferencia:
@@ -576,13 +576,13 @@ M = OR3
 A	B	D(R)	E
 0	0	{0}	1
 0	1	{1}	1
-0	2	{2}	0
+0	2	{2}	2
 1	0	{1}	1
 1	1	{1}	1
 1	2	{1}	1
-2	0	{2}	0
+2	0	{2}	2
 2	1	{1}	1
-2	2	{2}	0
+2	2	{2}	2
 M = AND3
 A	B	D(R)	E
 0	0	{0}	1
@@ -590,21 +590,21 @@ A	B	D(R)	E
 0	2	{0}	1
 1	0	{0}	1
 1	1	{1}	1
-1	2	{2}	0
+1	2	{2}	2
 2	0	{0}	1
-2	1	{2}	0
-2	2	{2}	0
-M = CONSENSUS3
+2	1	{2}	2
+2	2	{2}	2
+M = Uknonwn3
 A	B	D(R)	E
 0	0	{0}	1
-0	1	{2}	0
-0	2	{2}	0
-1	0	{2}	0
+0	1	{2}	2
+0	2	{2}	2
+1	0	{2}	2
 1	1	{1}	1
-1	2	{2}	0
-2	0	{2}	0
-2	1	{2}	0
-2	2	{2}	0
+1	2	{2}	2
+2	0	{2}	2
+2	1	{2}	2
+2	2	{2}	1
 13.4. C = 2 — Deducción de B
 
 En modo deducción:
@@ -614,35 +614,35 @@ M = OR3
 A	R	D(B)	E
 0	0	{0}	1
 0	1	{1}	1
-0	2	{0,1}	0
-1	0	{}	2
-1	1	{0,1}	0
-1	2	{0,1}	0
+0	2	{0,1}	2
+1	0	{}	0
+1	1	{0,1}	2
+1	2	{0,1}	2
 2	0	{0}	1
-2	1	{0,1}	0
-2	2	{0,1}	0
+2	1	{0,1}	2
+2	2	{0,1}	2
 M = AND3
 A	R	D(B)	E
-0	0	{0,1}	0
-0	1	{}	2
-0	2	{0,1}	0
+0	0	{0,1}	2
+0	1	{}	0
+0	2	{0,1}	2
 1	0	{0}	1
 1	1	{1}	1
-1	2	{0,1}	0
-2	0	{0,1}	0
+1	2	{0,1}	2
+2	0	{0,1}	2
 2	1	{1}	1
-2	2	{0,1}	0
+2	2	{0,1}	2
 M = UKNOWN3
 A	R	D(B)	E
 0	0	{0}	1
-0	1	{}	2
-0	2	{0,1}	0
-1	0	{}	2
+0	1	{}	0
+0	2	{0,1}	2
+1	0	{}	0
 1	1	{1}	1
-1	2	{0,1}	0
+1	2	{0,1}	2
 2	0	{0}	1
 2	1	{1}	1
-2	2	{0,1}	0
+2	2	{0,1}	2
 14. Observación sobre las tablas de deducción
 
 En las tablas de deducción, los dominios resultantes suelen expresarse sobre {0,1} y no sobre {0,1,2}.
@@ -701,17 +701,17 @@ El valor 2 no significa contradicción por sí mismo.
 
 La contradicción la indica:
 
-E = 2
+E = 0
 
 Por tanto:
 
-D = {2}, E = 0
+D = {2}, E = 2
 
 significa apertura o desconocimiento.
 
 Mientras que:
 
-D = {}, E = 2
+D = {}, E = 0
 
 significa contradicción formal.
 
@@ -722,7 +722,7 @@ Cuando aparece una contradicción local, el sistema no debe ocultarla convirtié
 Forma correcta:
 
 D_interno = {}
-E = 2
+E = 0
 
 Aunque hacia otras capas pueda exportarse:
 
@@ -752,9 +752,9 @@ Lo que cambia es la dirección de propagación de la restricción.
 
 El estado E se calcula a partir del dominio resultante de la variable objetivo.
 
-D = {}      → E = 2
+D = {}      → E = 0
 |D| = 1     → E = 1
-|D| > 1     → E = 0
+|D| > 1     → E = 2
 15.9. Eventos
 
 Un Trigate solo debe emitir eventos cuando haya información nueva.
@@ -782,9 +782,9 @@ y el dominio no cambió desde la última operación,
 entonces ignorar el evento.
 15.11. Redundancia
 
-E = 2 debe activar revisión, redundancia o intervención contextual.
+E = 0 debe activar revisión, redundancia o intervención contextual.
 
-E = 2 → solicitar contexto
+E = 0 → solicitar contexto
 
 La contradicción local debe tratarse como una señal de resolución distribuida.
 
@@ -796,7 +796,7 @@ F = evolución(E_anterior, E_nuevo)
 
 Con orden de calidad:
 
-E = 2 < E = 0 < E = 1
+E = 0 < E = 2 < E = 1
 
 F no describe el estado actual. Describe la dirección del cambio.
 
