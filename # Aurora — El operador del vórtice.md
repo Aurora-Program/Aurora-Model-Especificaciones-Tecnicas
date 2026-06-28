@@ -1,4 +1,4 @@
-# Aurora — El operador del vórtice
+
 
 # Aurora — El operador del vórtice
 

@@ -1,0 +1,3089 @@
+# Vocabulario
+Aurora opera con un vocabulario ternario {0,1,2}. Los valores 0 y 1 representan los dos estados definidos del espacio activo. El valor 2 representa cualquier estado que no puede ser determinado o expresado dentro de ese espacio.
+# Trigate
+## TriGate
+
+El **TriGate** es la relación lógica atómica del modelo Aurora.
+
+Se define como:
+
+[
+R=T(A,B,M)
+]
+
+donde:
+
+* (A,B\in{0,1,2}) son las entradas.
+* (M\in{0,1,2}) es el modo lógico.
+* (R\in{0,1,2}) es la síntesis emergente de la relación.
+
+### Modos lógicos
+
+[
+M=
+\begin{cases}
+0 & \mathrm{AND3}\
+1 & \mathrm{OR3}\
+2 & \mathrm{UNKNOWN3}
+\end{cases}
+]
+
+* **AND3** sintetiza la relación mediante conjunción ternaria.
+* **OR3** sintetiza la relación mediante disyunción ternaria.
+* **UNKNOWN3** representa la convergencia entre AND3 y OR3.
+
+Para (M=2):
+
+[
+\mathrm{UNKNOWN3}(A,B)=
+\begin{cases}
+R & \text{si }\mathrm{AND3}(A,B)=\mathrm{OR3}(A,B)=R\
+2 & \text{en cualquier otro caso}
+\end{cases}
+]
+
+Por tanto, el TriGate completo equivale a una función de mayoría ternaria:
+
+[
+T(A,B,M)=\operatorname{Majority3}(A,B,M)
+]
+
+El resultado (R) es el valor mayoritario entre (A), (B) y (M). Cuando no existe mayoría —es decir, cuando aparecen simultáneamente (0), (1) y (2)— el resultado es:
+
+[
+R=2
+]
+
+## Estado de la relación
+
+Además de (A), (B), (M) y (R), cada TriGate contiene tres valores de estado:
+
+[
+S=(C,E,F)
+]
+
+### Dirección de resolución (C)
+
+(C) determina qué componente de la relación se evalúa o resuelve:
+
+[
+C=
+\begin{cases}
+0 & \text{resolver }M\
+1 & \text{resolver }R\
+2 & \text{resolver }B
+\end{cases}
+]
+
+### Coherencia (E)
+
+(E) expresa la relación entre el valor señalado por (C) y la coherencia del TriGate:
+
+[
+E=
+\begin{cases}
+0 & \text{el valor evaluado no es posible}\
+1 & \text{el valor evaluado es necesario}\
+2 & \text{el valor evaluado es uno de varios posibles}
+\end{cases}
+]
+
+Por tanto:
+
+* (E=0): incompatibilidad.
+* (E=1): necesidad.
+* (E=2): posibilidad o ambigüedad.
+
+# Impacto informativo (F)
+
+(F) indica cómo cambia el nivel de determinación de la relación al evaluar o recalcular el componente señalado por (C).
+
+Sean (E) el estado de coherencia anterior y (E') el estado obtenido después de la evaluación:
+
+[
+F(E,E')=
+\begin{cases}
+0 & \text{si }E,E'\in{0,1}\text{ o }E=E'=2\
+1 & \text{si }E=2\text{ y }E'\in{0,1}\
+2 & \text{si }E\in{0,1}\text{ y }E'=2
+\end{cases}
+]
+
+Por tanto:
+
+* (F=0): el nivel de información permanece estable.
+* (F=1): aumenta la determinación; la ambigüedad se resuelve.
+* (F=2): disminuye la determinación; aparece ambigüedad.
+
+Las transiciones entre (0) y (1) producen:
+
+[
+0\rightarrow1 \quad\Rightarrow\quad F=0
+]
+
+[
+1\rightarrow0 \quad\Rightarrow\quad F=0
+]
+
+## Forma compacta
+
+[
+\boxed{\operatorname{TriGate}(A,B,M;C)\rightarrow(R,E,F)}
+]
+
+donde (R) sintetiza la relación, (C) selecciona su dirección de resolución, (E) mide su coherencia y (F) registra el cambio producido en dicha coherencia.
+
+# Relación de ordenación ternaria
+
+La primera relación compleja del modelo Aurora es la **ordenación de tres elementos mediante un TriGate**.
+
+Dados tres valores:
+
+[
+V=(v_0,v_1,v_2),
+\qquad
+v_i\in{0,1,2}
+]
+
+los valores se introducen en el TriGate como:
+
+[
+A=v_0,\qquad B=v_1,\qquad M=v_2
+]
+
+El TriGate aplica su función de mayoría ternaria:
+
+[
+R=T(A,B,M)
+]
+
+La relación genera tres coordenadas ordenadas:
+
+[
+(ES,FN,FO)
+]
+
+donde:
+
+[
+ES=\text{Estructura}
+]
+
+[
+FN=\text{Función}
+]
+
+[
+FO=\text{Forma}
+]
+
+El orden fijo de las coordenadas es:
+
+[
+\boxed{ES\rightarrow FN\rightarrow FO}
+]
+
+---
+
+## 1. Determinación de Estructura
+
+El resultado del TriGate determina directamente el valor de Estructura:
+
+[
+\boxed{ES=R}
+]
+
+Por tanto:
+
+[
+\boxed{
+ES=T(v_0,v_1,v_2)
+}
+]
+
+El TriGate determina **qué valor debe ocupar la coordenada Estructura**, pero no determina necesariamente en qué índice de la entrada se encuentra ese valor.
+
+---
+
+## 2. Ordenador
+
+De la relación emerge un nuevo valor llamado **Ordenador**:
+
+[
+\boxed{O}
+]
+
+(O) determina qué índice de la entrada representa al valor de (ES).
+
+Debe cumplirse:
+
+[
+\boxed{v_O=ES}
+]
+
+Por tanto, (ES) representa el valor estructural y (O) representa su posición:
+
+[
+ES=\text{valor}
+]
+
+[
+O=\text{índice del valor}
+]
+
+---
+
+## 3. Restricción de no autorreferencia
+
+Estructura no puede señalarse a sí misma.
+
+La autorreferencia se produce cuando el índice asignado a Estructura coincide con su propio valor:
+
+[
+\boxed{O=ES}
+]
+
+Por tanto, una asignación válida debe cumplir:
+
+[
+\boxed{O\neq ES}
+]
+
+La condición completa del Ordenador es:
+
+[
+\boxed{
+v_O=ES\land O\neq ES
+}
+]
+
+---
+
+## 4. Índices válidos para Estructura
+
+El conjunto de índices en los que aparece el valor de (ES) es:
+
+[
+I_{ES}
+======
+
+{i\in{0,1,2}\mid v_i=ES}
+]
+
+De este conjunto se elimina cualquier índice que produzca autorreferencia:
+
+[
+\boxed{
+I_{ES}^{*}
+==========
+
+{i\in{0,1,2}\mid v_i=ES\land i\neq ES}
+}
+]
+
+(I_{ES}^{*}) contiene todas las posiciones que pueden representar válidamente a Estructura.
+
+El Ordenador debe pertenecer a este conjunto:
+
+[
+\boxed{
+O\in I_{ES}^{*}
+}
+]
+
+---
+
+## 5. Estado del orden
+
+De la relación emerge también un segundo valor:
+
+[
+\boxed{E}
+]
+
+(E) expresa el estado de determinación del orden:
+
+[
+\boxed{
+E=
+\begin{cases}
+0 & \text{si no existe una asignación válida}[2mm]
+1 & \text{si existe una única asignación válida}[2mm]
+2 & \text{si existe más de una asignación válida}
+\end{cases}
+}
+]
+
+Formalmente:
+
+[
+\boxed{
+E=
+\begin{cases}
+0 & |I_{ES}^{*}|=0[2mm]
+1 & |I_{ES}^{*}|=1[2mm]
+2 & |I_{ES}^{*}|>1
+\end{cases}
+}
+]
+
+### Estado 0: orden imposible
+
+[
+E=0
+]
+
+No existe ningún índice válido para representar a (ES).
+
+La única aparición del valor produce autorreferencia, o no existe una posición compatible:
+
+[
+I_{ES}^{*}=\varnothing
+]
+
+### Estado 1: orden necesario
+
+[
+E=1
+]
+
+Existe un único índice válido:
+
+[
+I_{ES}^{*}={O}
+]
+
+El Ordenador queda completamente determinado.
+
+### Estado 2: orden ambiguo
+
+[
+E=2
+]
+
+El valor de (ES) aparece en más de un índice válido:
+
+[
+|I_{ES}^{*}|>1
+]
+
+Ninguna de esas posiciones genera autorreferencia, pero la relación no permite determinar todavía cuál de ellas debe representar a Estructura.
+
+En este estado:
+
+[
+O\in I_{ES}^{*}
+]
+
+pero (O) no está determinado de forma única.
+
+---
+
+## 6. Determinación de Función
+
+Una vez conocido el índice estructural (O), el valor de Estructura determina el índice de Función:
+
+[
+\boxed{i_{FN}=ES}
+]
+
+Por tanto:
+
+[
+\boxed{FN=v_{ES}}
+]
+
+La restricción:
+
+[
+O\neq ES
+]
+
+garantiza que Estructura y Función no ocupen el mismo índice.
+
+---
+
+## 7. Determinación de Forma
+
+Forma ocupa el único índice que no ha sido utilizado por Estructura ni por Función.
+
+Sea:
+
+[
+i_{FO}
+======
+
+{0,1,2}\setminus{O,ES}
+]
+
+Entonces:
+
+[
+\boxed{FO=v_{i_{FO}}}
+]
+
+Así, la asignación de los índices queda definida como:
+
+[
+\boxed{
+(i_{ES},i_{FN},i_{FO})
+======================
+
+(O,ES,\operatorname{restante}(O,ES))
+}
+]
+
+y los valores ordenados son:
+
+[
+\boxed{
+(ES,FN,FO)
+==========
+
+\left(
+R,;
+v_R,;
+v_{\operatorname{restante}(O,R)}
+\right)
+}
+]
+
+donde:
+
+[
+R=T(v_0,v_1,v_2)
+]
+
+y:
+
+[
+v_O=R,\qquad O\neq R
+]
+
+---
+
+## 8. Forma operativa
+
+La relación completa sigue esta secuencia:
+
+[
+(v_0,v_1,v_2)
+\overset{\text{TriGate}}{\longrightarrow}
+ES
+]
+
+[
+ES
+\overset{\text{localización}}{\longrightarrow}
+(O,E)
+]
+
+[
+(O,ES)
+\longrightarrow
+(FN,FO)
+]
+
+Es decir:
+
+1. El TriGate determina el valor de (ES).
+2. (O) determina qué índice representa a (ES).
+3. (E) indica si esa asignación es imposible, única o ambigua.
+4. El valor de (ES) determina el índice de (FN).
+5. (FO) ocupa el índice restante.
+
+---
+
+## Forma compacta
+
+[
+\boxed{
+ES=T(v_0,v_1,v_2)
+}
+]
+
+[
+\boxed{
+I_{ES}^{*}
+==========
+
+{i\mid v_i=ES\land i\neq ES}
+}
+]
+
+[
+\boxed{
+E=
+\begin{cases}
+0 & |I_{ES}^{*}|=0\
+1 & |I_{ES}^{*}|=1\
+2 & |I_{ES}^{*}|>1
+\end{cases}
+}
+]
+
+[
+\boxed{
+O\in I_{ES}^{*}
+}
+]
+
+[
+\boxed{
+FN=v_{ES}
+}
+]
+
+[
+\boxed{
+FO=v_{\operatorname{restante}(O,ES)}
+}
+]
+
+La relación de ordenación puede expresarse finalmente como:
+
+[
+\boxed{
+\operatorname{Ordenar}(v_0,v_1,v_2)
+\rightarrow
+(ES,FN,FO,O,E)
+}
+]
+
+con:
+
+[
+\boxed{
+ES=T(v_0,v_1,v_2)
+}
+]
+
+y sujeto a:
+
+[
+\boxed{
+v_O=ES\land O\neq ES
+}
+]
+
+# Destilador/Razonador
+
+El **Destilador/Razonador** es una relación compuesta formada por tres pares de TriGates.
+
+Recibe tres dimensiones previamente ordenadas:
+
+[
+d_1=(ES_1,FN_1,FO_1)
+]
+
+[
+d_2=(ES_2,FN_2,FO_2)
+]
+
+[
+d_3=(ES_3,FN_3,FO_3)
+]
+
+Cada dimensión mantiene el orden:
+
+[
+\boxed{ES\rightarrow FN\rightarrow FO}
+]
+
+La coordenada (ES) no se procesa directamente. Actúa como estructura implícita de cada dimensión, mientras que el Destilador/Razonador opera sobre las coordenadas (FN) y (FO).
+
+---
+
+## 1. Estructura
+
+El sistema contiene tres pares de TriGates:
+
+[
+PT=(PT_1,PT_2,PT_3)
+]
+
+Cada par contiene:
+
+[
+PT_n=(T_n^{FN},T_n^{FO})
+]
+
+donde:
+
+* (T_n^{FN}) procesa las coordenadas de Función.
+* (T_n^{FO}) procesa las coordenadas de Forma.
+
+Los pares relacionan las dimensiones mediante un ciclo cerrado:
+
+[
+d_1\rightarrow d_2
+]
+
+[
+d_2\rightarrow d_3
+]
+
+[
+d_3\rightarrow d_1
+]
+
+---
+
+## 2. Carga de los pares
+
+### Par 1
+
+Relaciona (d_1) con (d_2):
+
+[
+T_1^{FN}.A=FN_1
+]
+
+[
+T_1^{FN}.B=FN_2
+]
+
+[
+T_1^{FO}.A=FO_1
+]
+
+[
+T_1^{FO}.B=FO_2
+]
+
+### Par 2
+
+Relaciona (d_2) con (d_3):
+
+[
+T_2^{FN}.A=FN_2
+]
+
+[
+T_2^{FN}.B=FN_3
+]
+
+[
+T_2^{FO}.A=FO_2
+]
+
+[
+T_2^{FO}.B=FO_3
+]
+
+### Par 3
+
+Relaciona (d_3) con (d_1):
+
+[
+T_3^{FN}.A=FN_3
+]
+
+[
+T_3^{FN}.B=FN_1
+]
+
+[
+T_3^{FO}.A=FO_3
+]
+
+[
+T_3^{FO}.B=FO_1
+]
+
+---
+
+## 3. Acoplamiento Función–Forma
+
+Dentro de cada par, el resultado del TriGate funcional determina el modo del TriGate formal:
+
+[
+\boxed{
+T_n^{FO}.M=T_n^{FN}.R
+}
+]
+
+Por tanto, la relación se resuelve en dos fases.
+
+### Fase funcional
+
+[
+R_n^{FN}
+========
+
+T_n^{FN}
+\left(
+FN_i,FN_j,M_n^{FN}
+\right)
+]
+
+### Fase formal
+
+[
+R_n^{FO}
+========
+
+T_n^{FO}
+\left(
+FO_i,FO_j,R_n^{FN}
+\right)
+]
+
+El resultado funcional no solo constituye una salida: también actúa como puntero o modo operativo de la síntesis formal.
+
+La relación completa de cada par es:
+
+[
+\boxed{
+PT_n
+\left(
+(FN_i,FO_i),
+(FN_j,FO_j);
+M_n^{FN}
+\right)
+\rightarrow
+(R_n^{FN},R_n^{FO})
+}
+]
+
+con:
+
+[
+\boxed{
+R_n^{FO}
+========
+
+T
+\left(
+FO_i,FO_j,
+T(FN_i,FN_j,M_n^{FN})
+\right)
+}
+]
+
+---
+
+## 4. Salidas
+
+Los tres TriGates funcionales producen una tripleta funcional destilada:
+
+[
+\boxed{
+D_{FN}
+======
+
+\left(
+R_1^{FN},
+R_2^{FN},
+R_3^{FN}
+\right)
+}
+]
+
+Los tres TriGates formales producen una tripleta formal destilada:
+
+[
+\boxed{
+D_{FO}
+======
+
+\left(
+R_1^{FO},
+R_2^{FO},
+R_3^{FO}
+\right)
+}
+]
+
+Por tanto, el resultado del Destilador/Razonador es:
+
+[
+\boxed{
+DR(d_1,d_2,d_3)
+\rightarrow
+(D_{FN},D_{FO})
+}
+]
+
+donde:
+
+[
+D_{FN}\in{0,1,2}^{3}
+]
+
+[
+D_{FO}\in{0,1,2}^{3}
+]
+
+---
+
+## 5. Forma matricial
+
+La carga puede representarse como:
+
+[
+P_{FN}
+======
+
+\left(
+(FN_1,FN_2),
+(FN_2,FN_3),
+(FN_3,FN_1)
+\right)
+]
+
+[
+P_{FO}
+======
+
+\left(
+(FO_1,FO_2),
+(FO_2,FO_3),
+(FO_3,FO_1)
+\right)
+]
+
+Para cada posición (n):
+
+[
+D_{FN}[n]
+=========
+
+T
+\left(
+P_{FN}[n].A,
+P_{FN}[n].B,
+M_{FN}[n]
+\right)
+]
+
+[
+D_{FO}[n]
+=========
+
+T
+\left(
+P_{FO}[n].A,
+P_{FO}[n].B,
+D_{FN}[n]
+\right)
+]
+
+---
+
+## 6. Forma compacta
+
+Sean los índices cíclicos:
+
+[
+(i,j)\in{(1,2),(2,3),(3,1)}
+]
+
+Entonces:
+
+[
+\boxed{
+R_n^{FN}=T(FN_i,FN_j,M_n^{FN})
+}
+]
+
+[
+\boxed{
+R_n^{FO}=T(FO_i,FO_j,R_n^{FN})
+}
+]
+
+y:
+
+[
+\boxed{
+DR(d_1,d_2,d_3)
+===============
+
+\left(
+(R_1^{FN},R_2^{FN},R_3^{FN}),
+(R_1^{FO},R_2^{FO},R_3^{FO})
+\right)
+}
+]
+
+El Destilador/Razonador transforma tres dimensiones ordenadas en dos nuevas tripletas relacionadas:
+
+[
+\boxed{
+(d_1,d_2,d_3)
+\longrightarrow
+(D_{FN},D_{FO})
+}
+]
+
+La tripleta funcional determina la lógica con la que emerge la tripleta formal.
+
+# Relación de síntesis o emergencia
+
+La **Relación de Emergencia** es una relación compuesta formada por tres TriGates, uno por cada coordenada del espacio ordenado:
+
+[
+ES\rightarrow FN\rightarrow FO
+]
+
+Recibe tres dimensiones iniciales previamente ordenadas:
+
+[
+d_i=(ES_i,FN_i,FO_i),
+\qquad i\in{1,2,3}
+]
+
+y las dos tripletas producidas por el Destilador/Razonador:
+
+[
+D_{FN}=(DFN_1,DFN_2,DFN_3)
+]
+
+[
+D_{FO}=(DFO_1,DFO_2,DFO_3)
+]
+
+La coordenada estructural no necesita destilación previa. Se obtiene directamente de las tres dimensiones ordenadas:
+
+[
+D_{ES}=(ES_1,ES_2,ES_3)
+]
+
+Por tanto, la relación recibe tres tripletas dimensionales:
+
+[
+D_{ES},\qquad D_{FN},\qquad D_{FO}
+]
+
+---
+
+## 1. Estructura
+
+La relación contiene tres TriGates de emergencia:
+
+[
+TE=(T^{ES},T^{FN},T^{FO})
+]
+
+Cada TriGate sintetiza una dimensión completa:
+
+[
+T^{ES}\leftarrow D_{ES}
+]
+
+[
+T^{FN}\leftarrow D_{FN}
+]
+
+[
+T^{FO}\leftarrow D_{FO}
+]
+
+La carga de cada TriGate es:
+
+[
+T^X.A=D_X[0]
+]
+
+[
+T^X.B=D_X[1]
+]
+
+[
+T^X.M=D_X[2]
+]
+
+para:
+
+[
+X\in{ES,FN,FO}
+]
+
+Cada tripleta se interpreta así como una relación atómica:
+
+[
+R_X=T\bigl(D_X[0],D_X[1],D_X[2]\bigr)
+]
+
+---
+
+## 2. Síntesis emergente
+
+Los resultados de los tres TriGates forman la tripleta de síntesis:
+
+[
+\boxed{
+DS=(R_{ES},R_{FN},R_{FO})
+}
+]
+
+donde:
+
+[
+R_{ES}=T(ES_1,ES_2,ES_3)
+]
+
+[
+R_{FN}=T(DFN_1,DFN_2,DFN_3)
+]
+
+[
+R_{FO}=T(DFO_1,DFO_2,DFO_3)
+]
+
+El orden de la tripleta emergente conserva el orden dimensional:
+
+[
+\boxed{
+DS=(ES',FN',FO')
+}
+]
+
+con:
+
+[
+ES'=R_{ES}
+]
+
+[
+FN'=R_{FN}
+]
+
+[
+FO'=R_{FO}
+]
+
+---
+
+## 3. Estado de cierre
+
+Cada TriGate de emergencia produce también un estado de coherencia:
+
+[
+E_X\in{0,1,2}
+]
+
+Los tres estados forman la tripleta de cierre:
+
+[
+\boxed{
+DE=(E_{ES},E_{FN},E_{FO})
+}
+]
+
+Su interpretación es:
+
+[
+E_X=
+\begin{cases}
+0 & \text{la síntesis dimensional es incompatible}\
+1 & \text{la síntesis dimensional queda cerrada de forma única}\
+2 & \text{la síntesis dimensional permanece abierta o ambigua}
+\end{cases}
+]
+
+Por tanto, (DE) no representa nuevo contenido, sino el estado lógico con el que ha quedado sintetizada cada dimensión.
+
+[
+DE=(1,1,1)
+]
+
+representa un cierre completamente determinado.
+
+La presencia de algún:
+
+[
+E_X=2
+]
+
+indica que esa dimensión conserva alternativas posibles.
+
+La presencia de algún:
+
+[
+E_X=0
+]
+
+indica una incompatibilidad en el cierre de esa dimensión.
+
+---
+
+## 4. Resultado global del proceso
+
+La ordenación inicial de cada dimensión produce su Ordenador:
+
+[
+O_i
+]
+
+Los tres Ordenadores forman:
+
+[
+\boxed{
+DO=(O_1,O_2,O_3)
+}
+]
+
+Al finalizar las operaciones de ordenación, destilación y emergencia, el sistema queda representado mediante tres tripletas:
+
+[
+\boxed{
+D=(DO,DS,DE)
+}
+]
+
+donde:
+
+[
+\boxed{
+DO=(O_1,O_2,O_3)
+}
+]
+
+conserva la información de ordenación;
+
+[
+\boxed{
+DS=(R_{ES},R_{FN},R_{FO})
+}
+]
+
+conserva la síntesis emergente;
+
+y:
+
+[
+\boxed{
+DE=(E_{ES},E_{FN},E_{FO})
+}
+]
+
+conserva el estado de cierre de cada dimensión.
+
+---
+
+## 5. Forma operativa
+
+El proceso completo puede expresarse como:
+
+[
+(v_1,v_2,v_3)
+\overset{\text{ordenación}}{\longrightarrow}
+(d_1,d_2,d_3,DO)
+]
+
+[
+(d_1,d_2,d_3)
+\overset{\text{destilación}}{\longrightarrow}
+(D_{FN},D_{FO})
+]
+
+[
+(D_{ES},D_{FN},D_{FO})
+\overset{\text{emergencia}}{\longrightarrow}
+(DS,DE)
+]
+
+Por tanto:
+
+[
+\boxed{
+(d_1,d_2,d_3)
+\longrightarrow
+(DO,DS,DE)
+}
+]
+
+---
+
+## 6. Forma compacta
+
+[
+D_{ES}=(ES_1,ES_2,ES_3)
+]
+
+[
+DS=
+\left(
+T(D_{ES}),
+T(D_{FN}),
+T(D_{FO})
+\right)
+]
+
+[
+DE=
+\left(
+E(T^{ES}),
+E(T^{FN}),
+E(T^{FO})
+\right)
+]
+
+[
+\boxed{
+\operatorname{AuroraCore}(d_1,d_2,d_3)
+\rightarrow
+(DO,DS,DE)
+}
+]
+
+Las tres tripletas resultantes constituyen la representación mínima reversible del proceso:
+
+[
+\boxed{
+DO=\text{orden}
+}
+]
+
+[
+\boxed{
+DS=\text{síntesis}
+}
+]
+
+[
+\boxed{
+DE=\text{cierre}
+}
+]
+
+De este modo, Aurora transforma tres tripletas de entrada en tres tripletas resultantes que conservan la información necesaria para regenerarlas:
+
+[
+\boxed{
+(d_1,d_2,d_3)
+\rightleftarrows
+(DO,DS,DE)
+}
+]
+
+
+# Transcender
+
+## 1. Unidades estructurales
+
+### 1.1 Tripleta
+
+Una tripleta representa una dimensión compuesta por tres coordenadas ternarias:
+
+\[
+d=(ES,FN,FO),
+\qquad ES,FN,FO\in\{0,1,2\}
+\]
+
+El orden interno es siempre:
+
+\[
+\boxed{ES\rightarrow FN\rightarrow FO}
+\]
+
+### 1.2 Vector
+
+Un vector está formado por tres tripletas:
+
+\[
+\boxed{V=(d_1,d_2,d_3)}
+\]
+
+Por tanto:
+
+\[
+V\in\{0,1,2\}^{3\times3}
+\]
+
+### 1.3 Resultado estructural
+
+El procesamiento de un vector mediante ordenación, destilación y emergencia produce:
+
+\[
+\boxed{D=(DO,DS,DE)}
+\]
+
+con:
+
+\[
+DO,DS,DE\in\{0,1,2\}^{3}
+\]
+
+Sus funciones son distintas:
+
+\[
+\boxed{DO=\text{orden operativo}}
+\]
+
+\[
+\boxed{DS=\text{firma de síntesis}}
+\]
+
+\[
+\boxed{DE=\text{estado de cierre}}
+\]
+
+- \(DO\) determina la configuración que el sistema aplica o explora.
+- \(DE\) expresa la calidad del cierre local producido por esa configuración.
+- \(DS\) conserva la síntesis resultante y permite evaluar su coherencia con otras conclusiones.
+
+### 1.4 Semilla operativa
+
+La semilla mínima es:
+
+\[
+\boxed{SO_{\min}=(V,DS)}
+\]
+
+La semilla operativa completa es:
+
+\[
+\boxed{SO=(V,DS,DO,DE)}
+\]
+
+El vector contiene el estado desarrollado. \(DO\), \(DS\) y \(DE\) contienen su representación estructural comprimida y reversible.
+
+---
+
+## 2. Principio operativo
+
+El proceso natural del Transcender es:
+
+\[
+\boxed{
+DO
+\longrightarrow
+\operatorname{AuroraCore}(V,DO)
+\longrightarrow
+(DS,DE)
+}
+\]
+
+El sistema no busca directamente una síntesis \(DS\). Itera o deduce \(DO\), observa el cierre \(DE\) que produce y utiliza \(DS\) para comprobar que la nueva conclusión permanece alineada con el contexto.
+
+Por tanto:
+
+\[
+\boxed{DO=\text{variable de búsqueda}}
+\]
+
+\[
+\boxed{DE=\text{criterio de cierre local}}
+\]
+
+\[
+\boxed{DS=\text{criterio de coherencia contextual}}
+\]
+
+Una solución solo puede consolidarse cuando está suficientemente cerrada localmente y no contradice las síntesis relacionadas.
+
+---
+
+## 3. Caras del Transcender
+
+Cada semilla operativa actúa sobre una cara.
+
+Las tres caras principales son:
+
+\[
+\boxed{C_1=\text{entrada}}
+\]
+
+\[
+\boxed{C_2=\text{conocimiento}}
+\]
+
+\[
+\boxed{C_3=\text{salida}}
+\]
+
+Las tres caras transversales son:
+
+\[
+\boxed{C_4=\text{relación de síntesis}}
+\]
+
+\[
+\boxed{C_5=\text{relación de cierre}}
+\]
+
+\[
+\boxed{C_6=\text{relación de orden}}
+\]
+
+Finalmente:
+
+\[
+\boxed{C_7=\text{evaluación diferencial}}
+\]
+
+El Transcender completo queda definido como:
+
+\[
+\boxed{
+\operatorname{Transcender}(C_1,C_2,C_3)
+\rightarrow
+(C_4,C_5,C_6,C_7)
+}
+\]
+
+---
+
+## 4. Estado desconocido
+
+Cuando el sistema desconoce una tripleta, asigna:
+
+\[
+\boxed{U=(2,2,2)}
+\]
+
+Por ejemplo:
+
+\[
+DE=U
+\]
+
+indica que el cierre todavía no ha sido determinado.
+
+Una semilla completamente desconocida se representa como:
+
+\[
+SO_U=((U,U,U),U,U,U)
+\]
+
+---
+
+## 5. Memoria y contexto
+
+La memoria conserva semillas aprendidas:
+
+\[
+\boxed{\mathcal M\subseteq\{(V,DO,DS,DE)\}}
+\]
+
+Para una operación concreta se selecciona un contexto activo:
+
+\[
+\boxed{\mathcal K=\{SO_1,SO_2,\ldots,SO_n\}\subseteq\mathcal M}
+\]
+
+El contexto contiene las conclusiones relacionadas con la entrada actual. Sus síntesis forman:
+
+\[
+\mathcal S_{\mathcal K}=
+\{DS_1,DS_2,\ldots,DS_n\}
+\]
+
+La función del contexto no es imponer una respuesta fija, sino comprobar que decisiones localmente válidas no se vuelvan incompatibles entre sí al acumularse.
+
+---
+
+## 6. Modos de operación
+
+El Transcender tiene tres mecanismos:
+
+1. Sustitución.
+2. Resolución deductiva.
+3. Aprendizaje por búsqueda.
+
+### 6.1 Sustitución
+
+La memoria actúa como una relación ternaria reversible:
+
+\[
+\boxed{\mathcal M(DO,DS,DE)}
+\]
+
+Por tanto:
+
+\[
+(DO,DS)\xrightarrow{\mathcal M}DE
+\]
+
+\[
+(DO,DE)\xrightarrow{\mathcal M}DS
+\]
+
+\[
+(DS,DE)\xrightarrow{\mathcal M}DO
+\]
+
+Si existe una coincidencia única, el tercer componente se recupera sin ejecutar nuevamente el proceso interno:
+
+\[
+\boxed{\operatorname{Sustituir}(X,Y)\rightarrow Z}
+\]
+
+La sustitución recuperada debe someterse igualmente a la evaluación contextual de \(DS\). Una relación almacenada puede ser localmente válida y dejar de ser compatible con el contexto activo.
+
+### 6.2 Resolución deductiva
+
+Cuando no existe una sustitución única, pero se conocen dos componentes, se deduce el tercero:
+
+\[
+\boxed{(DO,DS)\rightarrow DE}
+\]
+
+\[
+\boxed{(DO,DE)\rightarrow DS}
+\]
+
+\[
+\boxed{(DS,DE)\rightarrow DO}
+\]
+
+El resultado deducido se valida mediante:
+
+\[
+\operatorname{Validar}(DS,DE;\mathcal K)
+\]
+
+### 6.3 Aprendizaje por búsqueda
+
+El aprendizaje se utiliza cuando \(DO\) no está determinado o cuando las soluciones recuperadas no satisfacen simultáneamente cierre y coherencia.
+
+El sistema itera:
+
+\[
+DO\in\{0,1,2\}^{3}
+\]
+
+El espacio máximo contiene:
+
+\[
+\boxed{3^3=27}
+\]
+
+candidatos.
+
+Para cada candidato \(DO_k\):
+
+1. Se aplica \(DO_k\) al vector.
+2. Se ejecuta el núcleo Aurora.
+3. Se obtienen \(DS_k\) y \(DE_k\).
+4. Se evalúa el cierre local de \(DE_k\).
+5. Se evalúa la coherencia contextual de \(DS_k\).
+6. Se evalúa el desplazamiento de orden.
+7. Se conserva la mejor solución compatible.
+
+Formalmente:
+
+\[
+\boxed{
+(DO_k,V)
+\longrightarrow
+(DS_k,DE_k)
+}
+\]
+
+---
+
+## 7. Cara de síntesis: \(C_4\)
+
+La cara \(C_4\) relaciona las síntesis de entrada, conocimiento y salida:
+
+\[
+\boxed{
+C_4.V=(C_1.DS,C_2.DS,C_3.DS)
+}
+\]
+
+El vector se procesa mediante el núcleo Aurora:
+
+\[
+\operatorname{AuroraCore}(C_4.V)
+\rightarrow
+(C_4.DO,C_4.DS,C_4.DE)
+\]
+
+\(C_4.DS\) representa la síntesis conjunta de las tres caras principales.
+
+\(C_4.DE\) expresa si sus síntesis son incompatibles, necesarias o todavía ambiguas:
+
+\[
+T(C_4.DE)=
+\begin{cases}
+0 & \text{incoherencia contextual}\\
+1 & \text{coherencia contextual cerrada}\\
+2 & \text{coherencia contextual abierta}
+\end{cases}
+\]
+
+Por tanto, \(C_4\) deja de compararse únicamente con un objetivo fijo. Su función principal es verificar que la síntesis candidata pueda integrarse con el conocimiento y las conclusiones relacionadas.
+
+---
+
+## 8. Firma de coherencia contextual
+
+La síntesis contextual puede obtenerse relacionando las firmas activas mediante el mismo comportamiento mayoritario del TriGate.
+
+Para tres síntesis:
+
+\[
+DS_a=(a_0,a_1,a_2)
+\]
+
+\[
+DS_b=(b_0,b_1,b_2)
+\]
+
+\[
+DS_c=(c_0,c_1,c_2)
+\]
+
+se define:
+
+\[
+\boxed{
+DS_{\mathcal K}[j]=T(a_j,b_j,c_j)
+}
+\]
+
+para:
+
+\[
+j\in\{0,1,2\}
+\]
+
+Si el contexto contiene más de tres síntesis, se agrupan recursivamente en relaciones ternarias:
+
+\[
+\boxed{
+DS_{\mathcal K}=
+\operatorname{FoldTriGate}(DS_1,\ldots,DS_n)
+}
+\]
+
+La coherencia del candidato se obtiene relacionando:
+
+\[
+\boxed{
+E_S(DO_k)=
+\operatorname{Estado}
+\left(
+DS_k,DS_{\mathcal K}
+\right)
+}
+\]
+
+con:
+
+\[
+E_S(DO_k)=
+\begin{cases}
+0 & \text{el candidato contradice el contexto}\\
+1 & \text{el candidato queda alineado de forma determinada}\\
+2 & \text{la relación permanece abierta}
+\end{cases}
+\]
+
+Así, \(DS\) sigue siendo contenido sintetizado; la calidad contextual emerge de relacionar esa síntesis con otras síntesis.
+
+---
+
+## 9. Cara de cierre: \(C_5\)
+
+La cara \(C_5\) relaciona los cierres de las tres caras principales:
+
+\[
+\boxed{
+C_5.V=(C_1.DE,C_2.DE,C_3.DE)
+}
+\]
+
+Su objetivo local es alcanzar:
+
+\[
+\boxed{G_5=(1,1,1)}
+\]
+
+Por tanto:
+
+\[
+\boxed{C_5.DE\approx(1,1,1)}
+\]
+
+La distancia de cierre es:
+
+\[
+\boxed{
+\Delta_E(DO_k)=
+\operatorname{Diff}(DE_k,(1,1,1))
+}
+\]
+
+Un candidato con:
+
+\[
+DE_k=(1,1,1)
+\]
+
+está completamente cerrado de forma local. Sin embargo, no se consolida si su \(DS_k\) produce incoherencia contextual.
+
+---
+
+## 10. Cara de orden: \(C_6\)
+
+La cara \(C_6\) relaciona los ordenadores de entrada, conocimiento y salida:
+
+\[
+\boxed{
+C_6.V=(C_1.DO,C_2.DO,C_3.DO)
+}
+\]
+
+\(DO\) es la variable operativa que el sistema modifica durante la búsqueda.
+
+El orden de referencia puede proceder de la entrada, de la memoria o de la solución anterior:
+
+\[
+\boxed{DO_{ref}}
+\]
+
+La distancia de orden es:
+
+\[
+\boxed{
+\Delta_O(DO_k)=
+\operatorname{Diff}(DO_k,DO_{ref})
+}
+\]
+
+Esta distancia no determina por sí sola la validez. Actúa como criterio de estabilidad entre candidatos con igual cierre y coherencia.
+
+---
+
+## 11. Propagación entre caras transversales
+
+Las caras \(C_4\), \(C_5\) y \(C_6\) son proyecciones de una misma relación:
+
+\[
+\boxed{
+D_T=(C_4.DS,C_5.DE,C_6.DO)
+}
+\]
+
+Comparten sus resultados:
+
+\[
+C_4.DE=C_5.DE
+\]
+
+\[
+C_4.DO=C_6.DO
+\]
+
+\[
+C_5.DS=C_4.DS
+\]
+
+\[
+C_5.DO=C_6.DO
+\]
+
+\[
+C_6.DS=C_4.DS
+\]
+
+\[
+C_6.DE=C_5.DE
+\]
+
+Esta propagación garantiza que la modificación de \(DO\) recalcule simultáneamente el cierre \(DE\) y la síntesis \(DS\).
+
+---
+
+## 12. Cara diferencial: \(C_7\)
+
+Se utiliza la distancia Manhattan para tripletas:
+
+\[
+\boxed{
+\operatorname{Diff}(X,Y)
+=
+\|X-Y\|_1
+=
+\sum_{i=0}^{2}|X_i-Y_i|
+}
+\]
+
+Para cada candidato \(DO_k\), \(C_7\) calcula:
+
+\[
+\boxed{
+C_7(DO_k)=
+(\Delta_E(k),\Delta_S(k),\Delta_O(k))
+}
+\]
+
+con:
+
+\[
+\Delta_E(k)=
+\operatorname{Diff}(DE_k,(1,1,1))
+\]
+
+\[
+\Delta_S(k)=
+\operatorname{Diff}(DS_k,DS_{\mathcal K})
+\]
+
+\[
+\Delta_O(k)=
+\operatorname{Diff}(DO_k,DO_{ref})
+\]
+
+Cuando el contexto todavía no produce una firma determinada:
+
+\[
+DS_{\mathcal K}=(2,2,2)
+\]
+
+la evaluación de síntesis permanece abierta y no penaliza como contradicción aquello que el sistema aún desconoce.
+
+---
+
+## 13. Selección jerárquica
+
+La selección no debe reducirse necesariamente a una suma simple. El orden natural de decisión es:
+
+1. Compatibilidad contextual.
+2. Cierre local.
+3. Alineación de síntesis.
+4. Estabilidad del orden.
+
+Primero se descartan los candidatos con incoherencia contextual:
+
+\[
+\boxed{
+\mathcal A=
+\{DO_k\mid E_S(DO_k)\neq0\}
+}
+\]
+
+Después se minimiza el cierre local:
+
+\[
+\mathcal B=
+\arg\min_{DO_k\in\mathcal A}\Delta_E(k)
+\]
+
+Entre los candidatos igualmente cerrados se minimiza la diferencia de síntesis:
+
+\[
+\mathcal C=
+\arg\min_{DO_k\in\mathcal B}\Delta_S(k)
+\]
+
+Finalmente se elige el menor desplazamiento de orden:
+
+\[
+\boxed{
+DO^*=
+\arg\min_{DO_k\in\mathcal C}\Delta_O(k)
+}
+\]
+
+Forma compacta:
+
+\[
+\boxed{
+DO^*=
+\arg\min_{DO_k}^{lex}
+\left(
+P_S(k),
+\Delta_E(k),
+\Delta_S(k),
+\Delta_O(k)
+\right)
+}
+\]
+
+con:
+
+\[
+P_S(k)=
+\begin{cases}
+0 & E_S(DO_k)=1\\
+1 & E_S(DO_k)=2\\
+2 & E_S(DO_k)=0
+\end{cases}
+\]
+
+La coherencia cerrada se prioriza sobre la abierta, y la abierta se prioriza sobre la contradictoria.
+
+---
+
+## 14. Coherencia local y global
+
+Se distinguen dos cierres:
+
+\[
+\boxed{DE_L=DE_k}
+\]
+
+\[
+\boxed{DE_G=E_S(DO_k)}
+\]
+
+- \(DE_L\) mide la coherencia interna de la semilla.
+- \(DE_G\) mide su coherencia con las conclusiones activas.
+
+Una conclusión puede estar localmente cerrada y ser globalmente incompatible:
+
+\[
+T(DE_L)=1
+\]
+
+\[
+DE_G=0
+\]
+
+En ese caso, el candidato no se consolida.
+
+La condición fuerte de aceptación es:
+
+\[
+\boxed{
+T(DE_L)=1
+\land
+DE_G=1
+}
+\]
+
+La condición provisional es:
+
+\[
+\boxed{
+T(DE_L)\in\{1,2\}
+\land
+DE_G=2
+}
+\]
+
+Una solución provisional se conserva como abierta, pero no se incorpora como conocimiento cerrado.
+
+---
+
+## 15. Prevención de incoherencias acumuladas
+
+Sean tres conclusiones previamente aceptadas:
+
+\[
+SO_1,SO_2,SO_3
+\]
+
+Aunque cada una tenga cierre local:
+
+\[
+DE_1=DE_2=DE_3=(1,1,1)
+\]
+
+sus síntesis deben relacionarse:
+
+\[
+\boxed{
+DS_G[j]=T(DS_1[j],DS_2[j],DS_3[j])
+}
+\]
+
+Una nueva conclusión \(SO_n\) solo puede consolidarse si su síntesis es compatible con \(DS_G\).
+
+Por tanto, el conocimiento no se almacena como una colección de decisiones independientes, sino como una red de decisiones que vuelven a evaluarse mediante relaciones ternarias.
+
+Cuando una nueva conclusión produce contradicción, el sistema puede:
+
+1. descartar el nuevo candidato;
+2. probar otro \(DO\);
+3. mantener la conclusión abierta;
+4. reabrir una conclusión anterior de menor calidad;
+5. reconstruir el contexto con representaciones alternativas.
+
+---
+
+## 16. Actualización de memoria
+
+Una relación se almacena como conocimiento cerrado cuando:
+
+\[
+\boxed{
+T(DE^*)=1
+\land
+E_S(DO^*)=1
+}
+\]
+
+Entonces:
+
+\[
+\boxed{
+\mathcal M
+\leftarrow
+\mathcal M\cup\{(V,DO^*,DS^*,DE^*)\}
+}
+\]
+
+Si el cierre o la coherencia permanecen abiertos:
+
+\[
+T(DE^*)=2
+\quad\lor\quad
+E_S(DO^*)=2
+\]
+
+la semilla puede almacenarse como hipótesis, pero no como conclusión cerrada.
+
+Si existe incompatibilidad:
+
+\[
+T(DE^*)=0
+\quad\lor\quad
+E_S(DO^*)=0
+\]
+
+la relación se rechaza o activa revisión contextual.
+
+---
+
+## 17. Algoritmo compacto
+
+\[
+\boxed{
+\operatorname{Transcender}(C_1,C_2;\mathcal M)
+\rightarrow C_3
+}
+\]
+
+1. Construir el contexto activo:
+
+\[
+\mathcal K\leftarrow\operatorname{Relacionadas}(C_1,C_2,\mathcal M)
+\]
+
+2. Intentar sustitución reversible con dos componentes conocidos.
+
+3. Si no existe una coincidencia única, intentar deducción.
+
+4. Si \(DO\) sigue indeterminado o la solución es incoherente, iterar:
+
+\[
+DO_k\in\{0,1,2\}^{3}
+\]
+
+5. Para cada candidato calcular:
+
+\[
+(DS_k,DE_k)=\operatorname{AuroraCore}(V,DO_k)
+\]
+
+6. Construir las caras transversales:
+
+\[
+C_4=(C_1.DS,C_2.DS,C_3.DS)
+\]
+
+\[
+C_5=(C_1.DE,C_2.DE,C_3.DE)
+\]
+
+\[
+C_6=(C_1.DO,C_2.DO,C_3.DO)
+\]
+
+7. Evaluar:
+
+\[
+E_S(k)=\operatorname{Coherencia}(DS_k,\mathcal K)
+\]
+
+\[
+C_7(k)=
+(\Delta_E(k),\Delta_S(k),\Delta_O(k))
+\]
+
+8. Seleccionar jerárquicamente:
+
+\[
+DO^*=\operatorname{Select}(E_S,C_7)
+\]
+
+9. Producir:
+
+\[
+\boxed{
+C_3=(V^*,DS^*,DO^*,DE^*)
+}
+\]
+
+10. Consolidar solo si existe cierre local y contextual:
+
+\[
+\boxed{
+T(DE^*)=1
+\land
+E_S(DO^*)=1
+}
+\]
+
+---
+
+## 18. Definición compacta final
+
+\[
+\boxed{
+\operatorname{Transcender}:
+(C_1,C_2;\mathcal M)
+\rightarrow C_3
+}
+\]
+
+sujeto a:
+
+\[
+\boxed{
+(DO_k,V)
+\rightarrow
+(DS_k,DE_k)
+}
+\]
+
+\[
+\boxed{
+DO^*=
+\arg\min_{DO_k}^{lex}
+\left(
+P_S(k),
+\operatorname{Diff}(DE_k,(1,1,1)),
+\operatorname{Diff}(DS_k,DS_{\mathcal K}),
+\operatorname{Diff}(DO_k,DO_{ref})
+\right)
+}
+\]
+
+La semilla resultante es:
+
+\[
+\boxed{
+SO^*=(V,DS^*,DO^*,DE^*)
+}
+\]
+
+El Transcender busca una configuración de orden que produzca simultáneamente:
+
+- cierre local;
+- coherencia con el contexto;
+- mínima alteración estructural.
+
+En forma conceptual:
+
+\[
+\boxed{DO=\text{decisión explorada}}
+\]
+
+\[
+\boxed{DE=\text{cierre obtenido}}
+\]
+
+\[
+\boxed{DS=\text{firma que relaciona la decisión con las demás}}
+\]
+
+Así, Aurora no acepta conclusiones únicamente porque sean coherentes de forma aislada. Las acepta cuando continúan siendo coherentes al integrarse con el resto de conclusiones del sistema.
+
+
+# Tensor fractal, ventana operativa y resolución del clúster
+
+## 1. Tensor fractal
+
+Un **tensor fractal**, (TF), es una agrupación recursiva de semillas operativas:
+
+[
+SO=(V,DS,DO,DE)
+]
+
+Cada tensor se organiza en tres niveles:
+
+[
+\boxed{1\rightarrow3\rightarrow9}
+]
+
+* El nivel superior contiene una semilla operativa.
+* El nivel intermedio contiene tres semillas operativas.
+* El nivel inferior contiene nueve semillas operativas, agrupadas de tres en tres.
+
+La semilla superior se construye usando como vector las síntesis de sus tres semillas hijas:
+
+[
+\boxed{
+SO^{(l+1)}.V=
+\left(
+SO^{(l)}_1.DS,,
+SO^{(l)}_2.DS,,
+SO^{(l)}_3.DS
+\right)
+}
+]
+
+Por tanto, cada nivel sintetiza el nivel inmediatamente inferior:
+
+[
+3,SO^{(l)}
+\longrightarrow
+SO^{(l+1)}
+]
+
+Un tensor fractal elemental contiene:
+
+[
+\boxed{
+TF=
+\left(
+SO^{(2)},
+SO^{(1)}_1,SO^{(1)}_2,SO^{(1)}_3,
+SO^{(0)}_1,\ldots,SO^{(0)}_9
+\right)
+}
+]
+
+El tensor puede representarse de forma compacta mediante su semilla raíz:
+
+[
+\boxed{
+\operatorname{Root}(TF)=SO^{(2)}
+}
+]
+
+pero conserva su desarrollo completo para permitir el descenso y la reconstrucción.
+
+---
+
+## 2. Representación de tokens
+
+Los tokens de entrada se traducen a tensores fractales:
+
+[
+\boxed{
+\tau:t\longrightarrow
+{TF_1,\ldots,TF_n}
+}
+]
+
+Un mismo token puede tener más de una representación:
+
+[
+|\tau(t)|\geq1
+]
+
+Asimismo, una secuencia de tokens puede disponer de una representación conjunta:
+
+[
+\boxed{
+\tau(t_i,\ldots,t_j)\longrightarrow TF_{i:j}
+}
+]
+
+Por tanto, el diccionario puede contener:
+
+* representaciones de tokens individuales;
+* representaciones de grupos de tokens;
+* representaciones aprendidas durante procesos anteriores.
+
+Cada entrada del diccionario tiene la forma:
+
+[
+\boxed{
+\mathcal D[k]
+=============
+
+\left(
+\text{tokens},
+TF,
+f,
+q
+\right)
+}
+]
+
+donde:
+
+* (k) es un token o secuencia de tokens;
+* (TF) es una representación fractal;
+* (f) es su frecuencia de uso;
+* (q) es su calidad o éxito de resolución.
+
+El diccionario se ordena prioritariamente por frecuencia:
+
+[
+\boxed{
+TF_a\prec TF_b
+\iff
+f(TF_a)>f(TF_b)
+}
+]
+
+Cuando una representación produce contradicción, el sistema prueba la siguiente alternativa disponible para el mismo token o grupo.
+
+---
+
+## 3. Clúster de tensores
+
+La traducción inicial genera un conjunto de representaciones posibles:
+
+[
+\boxed{
+\mathcal C_0=
+\tau(t_1)\times
+\tau(t_2)\times\cdots\times
+\tau(t_n)
+}
+]
+
+Este espacio constituye el **clúster de tensores**.
+
+Una ruta concreta del clúster es una secuencia ordenada:
+
+[
+\boxed{
+C=(TF_1,TF_2,\ldots,TF_m)
+}
+]
+
+La resolución busca una ruta compatible que pueda sintetizarse hasta producir un único tensor raíz.
+
+Las representaciones no se seleccionan definitivamente durante la traducción. Pueden sustituirse durante la operación cuando una ventana resulta contradictoria.
+
+---
+
+## 4. Ventana operativa
+
+La **ventana operativa** procesa tres tensores fractales:
+
+[
+\boxed{
+W_k=
+\left(
+DS^\uparrow_k,,
+TF_a,,
+TF_b,,
+TF_c
+\right)
+}
+]
+
+donde:
+
+* (TF_a,TF_b,TF_c) son los tensores activos;
+* (DS^\uparrow_k) es la síntesis superior acumulada;
+* inicialmente:
+
+[
+\boxed{
+DS^\uparrow_0=(2,2,2)
+}
+]
+
+Los tres tensores se cargan como caras principales del Transcender:
+
+[
+C_1=TF_a,\qquad
+C_2=TF_b,\qquad
+C_3=TF_c
+]
+
+La ventana ejecuta:
+
+[
+\boxed{
+\operatorname{Transcender}(C_1,C_2,C_3)
+\rightarrow
+(C_4,C_5,C_6,C_7)
+}
+]
+
+Para resolver el clúster, la ventana observa principalmente:
+
+[
+\boxed{
+E_W=C_4.DE
+}
+]
+
+La síntesis superior obtenida es:
+
+[
+\boxed{
+DS^\uparrow_{k+1}=C_4.DS
+}
+]
+
+---
+
+## 5. Evaluación mayoritaria del cierre
+
+Sea:
+
+[
+E_W=(e_0,e_1,e_2)
+]
+
+Se aplica el mismo comportamiento mayoritario del TriGate:
+
+[
+\boxed{
+s_W=T(e_0,e_1,e_2)
+}
+]
+
+donde:
+
+[
+s_W\in{0,1,2}
+]
+
+El resultado determina el estado de la ventana:
+
+[
+\boxed{
+\operatorname{Estado}(W)=
+\begin{cases}
+\text{contradictoria} & s_W=0\
+\text{coherente} & s_W=1\
+\text{abierta} & s_W=2
+\end{cases}
+}
+]
+
+Ejemplos:
+
+[
+(1,1,2)\rightarrow1
+]
+
+[
+(2,2,1)\rightarrow2
+]
+
+[
+(0,0,2)\rightarrow0
+]
+
+Cuando aparecen simultáneamente los tres valores:
+
+[
+(0,1,2)\rightarrow2
+]
+
+la ventana se mantiene abierta, porque no existe una mayoría definida y el valor (2) representa indeterminación.
+
+---
+
+## 6. Ventana coherente
+
+La ventana es coherente cuando:
+
+[
+\boxed{
+T(C_4.DE)=1
+}
+]
+
+En este caso se construye un nuevo tensor emergente:
+
+[
+\boxed{
+TF_E=
+\operatorname{Grupo}
+\left(
+TF_a,
+TF_b,
+TF_c,
+DS^\uparrow_{k+1}
+\right)
+}
+]
+
+Su semilla raíz utiliza las síntesis de los tres tensores procesados:
+
+[
+\boxed{
+TF_E.Root.V=
+\left(
+TF_a.Root.DS,,
+TF_b.Root.DS,,
+TF_c.Root.DS
+\right)
+}
+]
+
+y su síntesis raíz es:
+
+[
+\boxed{
+TF_E.Root.DS=DS^\uparrow_{k+1}
+}
+]
+
+El tensor emergente se almacena en el clúster del nivel siguiente:
+
+[
+\boxed{
+\mathcal C_{l+1}
+\leftarrow
+\mathcal C_{l+1}\cup{TF_E}
+}
+]
+
+Después, la ventana continúa con los tres tensores siguientes del nivel actual.
+
+---
+
+## 7. Ventana abierta
+
+La ventana permanece abierta cuando:
+
+[
+\boxed{
+T(C_4.DE)=2
+}
+]
+
+El resultado todavía no puede elevarse como una síntesis cerrada.
+
+Se genera un **tensor de continuidad**:
+
+[
+\boxed{
+TF_C=
+\operatorname{Carry}
+\left(
+TF_a,
+TF_b,
+TF_c,
+C_4.DE
+\right)
+}
+]
+
+Su función es conservar:
+
+1. la agrupación provisional evaluada;
+2. el estado de cierre incompleto;
+3. la síntesis superior alcanzada.
+
+La siguiente ventana se construye como:
+
+[
+\boxed{
+W_{k+1}
+=======
+
+\left(
+DS^\uparrow_{k+1},
+TF_C,
+TF_{c+1},
+TF_{c+2}
+\right)
+}
+]
+
+Por tanto, una relación abierta consume nuevos tensores progresivamente:
+
+[
+(TF_a,TF_b,TF_c)
+\rightarrow
+(TF_C,TF_{c+1},TF_{c+2})
+]
+
+La síntesis superior no se reinicia:
+
+[
+\boxed{
+DS^\uparrow_{k+1}=C_4.DS
+}
+]
+
+De este modo, la ventana mantiene memoria estructural de la evaluación anterior.
+
+---
+
+## 8. Ventana contradictoria
+
+La ventana es contradictoria cuando:
+
+[
+\boxed{
+T(C_4.DE)=0
+}
+]
+
+La combinación activa se descarta:
+
+[
+\boxed{
+W_k\rightarrow\varnothing
+}
+]
+
+El sistema realiza entonces una operación de retroceso:
+
+1. identifica los tokens representados por los tensores de la ventana;
+2. consulta sus representaciones alternativas;
+3. sustituye una o varias representaciones;
+4. reconstruye la ventana;
+5. vuelve a evaluarla.
+
+Formalmente:
+
+[
+\boxed{
+TF_i
+\leftarrow
+\operatorname{Next}
+\left(
+\mathcal D[\operatorname{tokens}(TF_i)]
+\right)
+}
+]
+
+La búsqueda puede priorizar la sustitución del tensor con menor frecuencia o menor calidad:
+
+[
+\boxed{
+TF^*
+====
+
+\arg\min_{TF_i\in W}
+\left(
+f(TF_i),q(TF_i)
+\right)
+}
+]
+
+Si se agotan todas las alternativas de la ventana, se retrocede a una agrupación anterior del clúster.
+
+---
+
+## 9. Ciclo ascendente
+
+El nivel inicial contiene los tensores obtenidos de los tokens:
+
+[
+\mathcal C_0=
+(TF_1,\ldots,TF_n)
+]
+
+Cada ciclo genera un nivel superior:
+
+[
+\boxed{
+\mathcal C_l
+\longrightarrow
+\mathcal C_{l+1}
+}
+]
+
+El proceso se repite mientras:
+
+[
+|\mathcal C_l|>1
+]
+
+La condición de terminación es:
+
+[
+\boxed{
+|\mathcal C_L|=1
+}
+]
+
+El único tensor restante es el tensor superior del clúster:
+
+[
+\boxed{
+TF_{\mathrm{root}}
+}
+]
+
+El ascenso completo puede expresarse como:
+
+[
+\boxed{
+(TF_1,\ldots,TF_n)
+\overset{\operatorname{Ascender}}{\longrightarrow}
+TF_{\mathrm{root}}
+}
+]
+
+---
+
+## 10. Registro de agrupaciones
+
+Durante el ascenso se conserva un registro:
+
+[
+\boxed{
+\mathcal G=
+{
+(TF_E,\text{hijos},DS,DE,DO,C_3)
+}
+}
+]
+
+Este registro almacena para cada tensor emergente:
+
+* los tensores que lo originaron;
+* su síntesis;
+* su cierre;
+* su orden;
+* la agrupación de salida obtenida en (C_3).
+
+Las agrupaciones (C_3) que hayan producido cierres coherentes reciben prioridad durante el descenso.
+
+---
+
+## 11. Ciclo descendente
+
+Una vez alcanzado (TF_{\mathrm{root}}), el sistema inicia la reconstrucción:
+
+[
+\boxed{
+TF_{\mathrm{root}}
+\overset{\operatorname{Descender}}{\longrightarrow}
+(TF'_1,\ldots,TF'_r)
+}
+]
+
+Para cada tensor se consultan primero las agrupaciones de salida observadas durante el ascenso:
+
+[
+\boxed{
+\operatorname{Expandir}(TF)
+===========================
+
+\arg\max_{g\in\mathcal G(TF)}
+\operatorname{Prioridad}(g.C_3)
+}
+]
+
+La prioridad puede considerar:
+
+[
+\operatorname{Prioridad}(g)
+===========================
+
+\alpha f(g)+
+\beta q(g)+
+\gamma c(g)
+]
+
+donde:
+
+* (f(g)) es frecuencia;
+* (q(g)) es calidad histórica;
+* (c(g)) es coherencia alcanzada.
+
+El descenso continúa hasta producir tensores asociados a tokens o grupos de tokens almacenados en el diccionario.
+
+---
+
+## 12. Aprendizaje del diccionario
+
+Toda agrupación utilizada satisfactoriamente durante el descenso se almacena:
+
+[
+\boxed{
+\mathcal D[
+\operatorname{tokens}(TF)
+]
+\leftarrow TF
+}
+]
+
+Si la entrada ya existe:
+
+[
+f(TF)\leftarrow f(TF)+1
+]
+
+y su calidad se actualiza según el éxito de cierre y reconstrucción.
+
+El sistema aprende así simultáneamente:
+
+* representaciones de tokens;
+* representaciones de expresiones;
+* agrupaciones sintácticas o semánticas;
+* rutas de ascenso;
+* rutas de reconstrucción.
+
+---
+
+## 13. Algoritmo compacto
+
+### Traducción
+
+[
+\mathcal C_0
+\leftarrow
+\operatorname{Traducir}(\text{tokens},\mathcal D)
+]
+
+### Ascenso
+
+Mientras:
+
+[
+|\mathcal C_l|>1
+]
+
+se ejecutan ventanas:
+
+[
+W_k=
+(DS^\uparrow_k,TF_a,TF_b,TF_c)
+]
+
+y se calcula:
+
+[
+(C_4.DS,C_4.DE)
+===============
+
+\operatorname{Ventana}(W_k)
+]
+
+Entonces:
+
+[
+\boxed{
+\begin{array}{rcl}
+T(C_4.DE)=1
+&\Rightarrow&
+TF_E\rightarrow\mathcal C_{l+1}[2mm]
+T(C_4.DE)=2
+&\Rightarrow&
+TF_C\rightarrow W_{k+1}[2mm]
+T(C_4.DE)=0
+&\Rightarrow&
+\operatorname{Backtrack}(\mathcal D)
+\end{array}
+}
+]
+
+### Descenso
+
+Cuando:
+
+[
+|\mathcal C_L|=1
+]
+
+se ejecuta:
+
+[
+TF_{\mathrm{root}}
+\overset{\mathcal G}{\longrightarrow}
+\text{tensores de salida}
+]
+
+y las agrupaciones utilizadas se incorporan al diccionario.
+
+---
+
+## 14. Ejemplo operativo
+
+Entrada:
+
+[
+\text{“la casa de Juan es verde”}
+]
+
+Traducción:
+
+[
+\text{la}\rightarrow T_1
+]
+
+[
+\text{casa}\rightarrow T_2
+]
+
+[
+\text{de}\rightarrow T_3
+]
+
+[
+\text{Juan}\rightarrow T_4
+]
+
+[
+\text{es}\rightarrow T_5
+]
+
+[
+\text{verde}\rightarrow T_6
+]
+
+### Primera ventana
+
+[
+W_1=
+\left(
+(2,2,2),
+T_1,T_2,T_3
+\right)
+]
+
+Resultado:
+
+[
+DS^\uparrow_1=(1,2,0)
+]
+
+[
+C_4.DE=(2,1,2)
+]
+
+Como:
+
+[
+T(2,1,2)=2
+]
+
+la ventana queda abierta.
+
+Se generan:
+
+[
+TF_C=
+\operatorname{Carry}(T_1,T_2,T_3,(2,1,2))
+]
+
+y:
+
+[
+W_2=
+\left(
+(1,2,0),
+TF_C,T_4,T_5
+\right)
+]
+
+### Segunda ventana
+
+Si:
+
+[
+C_4.DE=(1,1,1)
+]
+
+entonces:
+
+[
+T(1,1,1)=1
+]
+
+y emerge:
+
+[
+TF_E=
+\operatorname{Grupo}
+(TF_C,T_4,T_5)
+]
+
+Este tensor se almacena en el siguiente nivel.
+
+El tensor restante (T_6) continúa en una ventana posterior, junto con los tensores emergentes o de continuidad necesarios para completar una terna.
+
+---
+
+## 15. Definición compacta final
+
+[
+\boxed{
+\operatorname{ResolverCluster}
+:
+(t_1,\ldots,t_n;\mathcal D)
+\rightarrow
+TF_{\mathrm{root}}
+\rightarrow
+(t'_1,\ldots,t'_m)
+}
+]
+
+con:
+
+[
+\boxed{
+TF=\operatorname{Fractal}(SO)
+}
+]
+
+[
+\boxed{
+W=(DS^\uparrow,TF_a,TF_b,TF_c)
+}
+]
+
+[
+\boxed{
+s_W=T(C_4.DE)
+}
+]
+
+y:
+
+[
+\boxed{
+s_W=
+\begin{cases}
+0 & \text{descartar y buscar alternativa}\
+1 & \text{cerrar y elevar}\
+2 & \text{mantener abierto y continuar}
+\end{cases}
+}
+]
+
+La resolución del clúster es, por tanto, un proceso de:
+
+[
+\boxed{
+\text{traducción}
+\rightarrow
+\text{agrupación}
+\rightarrow
+\text{evaluación}
+\rightarrow
+\text{ascenso}
+\rightarrow
+\text{descenso}
+\rightarrow
+\text{aprendizaje}
+}
+]
+
+La idea central de la arquitectura queda definida así:
+
+[
+\text{cambio de un trit}
+\rightarrow
+\text{evento}
+\rightarrow
+\text{ejecución de los TriGates dependientes}
+\rightarrow
+\text{nuevos cambios}
+\rightarrow
+\text{convergencia}
+]
+
+Los TriGates no intercambian copias de valores. Todos acceden mediante punteros a celdas ternarias compartidas. Cuando una celda cambia, activa automáticamente las relaciones que dependen de ella.
+
+[
+\boxed{
+\operatorname{AuroraAsync}
+==========================
+
+(\mathcal S,\mathcal G,\mathcal Q,\operatorname{Propagar})
+}
+]
+
+donde (\mathcal S) es la memoria compartida, (\mathcal G) la red de TriGates y (\mathcal Q) la cola asíncrona de eventos.
+
+

@@ -117,13 +117,13 @@ E ∈ {0, 1, 2}
 E	Nombre	Significado
 2	ambiguo	la resolución sigue abierta
 1	coherente	la resolución queda cerrada de forma consistente
-2	contradictorio	no existe solución local compatible
+0	contradictorio	no existe solución local compatible
 
 Regla normativa:
 
-D = {}      → E = 2
+D = {}      → E = 0
 |D| = 1     → E = 1
-|D| > 1     → E = 0
+|D| > 1     → E = 2
 
 Para el caso especial D = {2}:
 
@@ -188,15 +188,15 @@ Si alguna entrada cerrada vale 0, el resultado tiende a 0.
 
 Cuando no hay información suficiente para cerrar el resultado, el dominio permanece abierto.
 
-6.3. M = 2 — CONSENSUS3
+6.3. M = 2 — UKNOWN3
 
-El modo CONSENSUS3 representa una relación de acuerdo.
+El modo UKNOWN33 representa una relación de acuerdo.
 
 Principio:
 
-El resultado solo se cierra cuando las entradas ofrecen una señal compatible común.
+El resultado solo se cierra cuando las entradas ofrecen una señal compatible común a la insturccion or2 an and3
 
-Si las entradas no permiten establecer consenso, el resultado queda abierto o se marca contradicción, según el caso.
+Si las entradas no permiten establecer compatibilidad con las dos funciones, el resultado queda abierto o se marca contradicción, según el caso.
 
 7. Variable de control C
 
@@ -825,3 +825,6 @@ Usa F para expresar evolución local.
 Convierte la contradicción en solicitud de redundancia.
 
 
+Note: 
+
+El trigate debido a que and 0 y or 1 uknow 2. 

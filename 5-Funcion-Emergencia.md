@@ -505,8 +505,8 @@ revalidación que todo lo demás.
 11.bis.8. Conexión con la contradicción del Trigate
 Esta distinción es la versión geométrica de la distinción fundamental del
 Trigate entre apertura y contradicción:
-textTrigate (CSP):       D = {2}  apertura, recuperable, E = 0
-                     D = {}   contradicción formal, E = 2
+textTrigate (CSP):       D = {2}  apertura, recuperable, E = 2
+                     D = {}   contradicción formal, E = 0
 
 Emergencia (geom.):  defecto  apertura geométrica, recuperable → Carry
                      cruce    contradicción geométrica, irrecuperable → abandono
@@ -576,9 +576,9 @@ D(S)' = D(S) ∩ S_compatibles(DD, DS_observado, E_observado)
 Estado formal derivado:
 
 ```text
-D(S)' = {}      → CE = 2
+D(S)' = {}      → CE = 0
 |D(S)'| = 1     → CE = 1
-|D(S)'| > 1     → CE = 0
+|D(S)'| > 1     → CE = 2
 ```
 
 ---

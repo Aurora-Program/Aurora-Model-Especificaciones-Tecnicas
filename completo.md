@@ -419,9 +419,9 @@ C = 2 → E se calcula sobre los dominios de entrada afectados
 
 Regla simple:
 
-D_objetivo = {}      → E = 2
+D_objetivo = {}      → E = 0
 |D_objetivo| = 1     → E = 1
-|D_objetivo| > 1     → E = 0
+|D_objetivo| > 1     → E = 2
 
 Para C = 2, como puede haber varios dominios afectados:
 
@@ -780,9 +780,9 @@ E	Nombre	Significado
 
 Regla normativa:
 
-D = {}      → E = 2
+D = {}      → E = 0
 |D| = 1     → E = 1
-|D| > 1     → E = 0
+|D| > 1     → E = 2
 
 Para el caso especial D = {2}:
 
@@ -2320,8 +2320,8 @@ revalidación que todo lo demás.
 11.bis.8. Conexión con la contradicción del Trigate
 Esta distinción es la versión geométrica de la distinción fundamental del
 Trigate entre apertura y contradicción:
-textTrigate (CSP):       D = {2}  apertura, recuperable, E = 0
-                     D = {}   contradicción formal, E = 2
+textTrigate (CSP):       D = {2}  apertura, recuperable, E = 2
+                     D = {}   contradicción formal, E = 0
 
 Emergencia (geom.):  defecto  apertura geométrica, recuperable → Carry
                      cruce    contradicción geométrica, irrecuperable → abandono
@@ -2391,9 +2391,9 @@ D(S)' = D(S) ∩ S_compatibles(DD, DS_observado, E_observado)
 Estado formal derivado:
 
 ```text
-D(S)' = {}      → CE = 2
+D(S)' = {}      → CE = 0
 |D(S)'| = 1     → CE = 1
-|D(S)'| > 1     → CE = 0
+|D(S)'| > 1     → CE = 2
 ```
 
 ---
@@ -2421,9 +2421,9 @@ D(DD)' = D(DD) ∩ DD_compatibles(S, DS_observado, E_observado)
 Estado formal derivado:
 
 ```text
-D(DD)' = {}      → CE = 2
+D(DD)' = {}      → CE = 0
 |D(DD)'| = 1     → CE = 1
-|D(DD)'| > 1     → CE = 0
+|D(DD)'| > 1     → CE = 2
 ```
 
 ---
